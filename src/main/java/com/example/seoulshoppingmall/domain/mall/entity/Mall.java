@@ -57,27 +57,27 @@ public class Mall{
 
     @NotNull
     @Column(name = "overall_rating")
-    private Integer overallRating;
+    private int overallRating;
 
     @NotNull
     @Column(name = "business_info_rating")
-    private Integer businessInfoRating;
+    private int businessInfoRating;
 
     @NotNull
     @Column(name = "cancellation_policy_rating")
-    private Integer cancellationPolicyRating;
+    private int cancellationPolicyRating;
 
     @NotNull
     @Column(name = "payment_method_rating")
-    private Integer paymentMethodRating;
+    private int paymentMethodRating;
 
     @NotNull
     @Column(name = "terms_rating")
-    private Integer termsRating;
+    private int termsRating;
 
     @NotNull
     @Column(name = "privacy_security_rating")
-    private Integer privacySecurityRating;
+    private int privacySecurityRating;
 
     @Column(name = "main_products")
     private String mainProducts;
