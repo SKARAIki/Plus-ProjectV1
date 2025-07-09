@@ -1,7 +1,6 @@
 package com.example.seoulshoppingmall.domain.mall.entity;
 
-import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
-import com.example.seoulshoppingmall.domain.auth.entity.Member;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -245,27 +244,27 @@ public class Mall{
         return businessStatus;
     }
 
-    public Integer getOverallRating() {
+    public int getOverallRating() {
         return overallRating;
     }
 
-    public Integer getBusinessInfoRating() {
+    public int getBusinessInfoRating() {
         return businessInfoRating;
     }
 
-    public Integer getCancellationPolicyRating() {
+    public int getCancellationPolicyRating() {
         return cancellationPolicyRating;
     }
 
-    public Integer getPaymentMethodRating() {
+    public int getPaymentMethodRating() {
         return paymentMethodRating;
     }
 
-    public Integer getTermsRating() {
+    public int getTermsRating() {
         return termsRating;
     }
 
-    public Integer getPrivacySecurityRating() {
+    public int getPrivacySecurityRating() {
         return privacySecurityRating;
     }
 
