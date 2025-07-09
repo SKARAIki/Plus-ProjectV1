@@ -1,5 +1,8 @@
 package com.example.seoulshoppingmall.domain.mall.dto.openapi;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MallOpenApiDto  {
     // 속성
         private String businessName;

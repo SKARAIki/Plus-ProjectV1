@@ -2,6 +2,7 @@ package com.example.seoulshoppingmall.domain.mall.entity;
 
 import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
 import com.example.seoulshoppingmall.domain.auth.entity.Member;
+import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -332,4 +333,44 @@ public class Mall{
     public String getMonitoringDate() {
         return monitoringDate;
     }
+
+    // MallService에서 쓰는 정적 메서드
+    public static Mall fromDto(MallOpenApiDto dto) {
+        return new Mall(
+                null,
+                dto.getBusinessName(),
+                dto.getMallName(),
+                dto.getDomainName(),
+                dto.getPhoneNumber(),
+                dto.getOperatorEmail(),
+                dto.getSalesNumber(),
+                dto.getBusinessType(),
+                dto.getInitialReportDate(),
+                dto.getCompanyAddress(),
+                dto.getBusinessStatus(),
+                dto.getOverallRating(),
+                dto.getBusinessInfoRating(),
+                dto.getCancellationPolicyRating(),
+                dto.getPaymentMethodRating(),
+                dto.getTermsRating(),
+                dto.getPrivacySecurityRating(),
+                dto.getMainProducts(),
+                dto.getCancellationPolicyAvailable(),
+                dto.getMandatoryDisplayItems(),
+                dto.getPaymentMethods(),
+                dto.getTermsCompliance(),
+                dto.getPrivacyPolicy(),
+                dto.getAdditionalPrivacyRequirements(),
+                dto.getPurchaseSafetyService(),
+                dto.getSecureServerInstallation(),
+                dto.getCertificationMark(),
+                dto.getDeliveryDateDisplay(),
+                dto.getReturnShippingCostResponsibility(),
+                dto.getCustomerComplaintBoard(),
+                dto.getMemberWithdrawalMethod(),
+                dto.getSiteOpeningYear(),
+                dto.getMonitoringDate()
+        );
+    }
+
 }

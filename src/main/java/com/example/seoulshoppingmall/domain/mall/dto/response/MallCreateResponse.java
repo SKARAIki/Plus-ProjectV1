@@ -5,11 +5,7 @@ public class MallCreateResponse {
     private int status;
     private String message;
 
-    // 기본 생성자
-    public MallCreateResponse() {
-    }
-
-    // 생성자
+    // 생성자 , 기본생성자 생략
     public MallCreateResponse(int status, String message) {
         this.status = status;
         this.message = message;
@@ -20,15 +16,7 @@ public class MallCreateResponse {
         return status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 }
