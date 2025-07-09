@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,14 +21,12 @@ public class MallController {
     private final MallService mallService;
 
     @GetMapping("/v3/malls")
-    public ResponseEntity<ApiResponse<List<MallResponseDto>>> GetMallList() {
-    List<MallResponseDto> mallList = mallService.GetMallList();
+    public ResponseEntity<ApiResponse<List<MallResponseDto>>> GetMallList(
+            @RequestParam(required = false) Integer overallRating,
+            @RequestParam(required = false) String businessStatus
+    ) {
+    List<MallResponseDto> mallList = mallService.GetMallList(overallRating, businessStatus);
 
-        ApiResponse<List<MallResponseDto>> response = ApiResponse.success(
-                HttpStatus.OK,
-                "성공",
-                mallList
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공", mallList));
     }
 }

@@ -1,7 +1,9 @@
 package com.example.seoulshoppingmall.domain.mall.dto.response;
 
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
+import lombok.Getter;
 
+@Getter
 public class MallResponseDto {
 
     private Long id;

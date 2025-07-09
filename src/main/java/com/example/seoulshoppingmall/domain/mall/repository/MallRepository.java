@@ -8,4 +8,10 @@ import java.util.List;
 public interface MallRepository extends JpaRepository<Mall, Long> {
 
     List<Mall> findAllByOrderByMonitoringDateDesc();
+
+    List<Mall> findByOverallRatingOrderByMonitoringDateDesc(int overallRating);
+
+    List<Mall> findByBusinessStatusOrderByMonitoringDateDesc(String businessStatus);
+
+    List<Mall> findByOverallRatingAndBusinessStatusOrderByMonitoringDateDesc(int overallRating, String businessStatus);
 }
