@@ -22,14 +22,11 @@ public class MallController {
 
     // mall 데이터 (세고)저장
     @PostMapping("/collection-openapi")
-    public ResponseEntity<MallCreateResponse> createMalls(@RequestBody List<MallOpenApiDto> mallopenapiDtos) {
-        int savedCount = mallService.saveAllMalls(mallopenapiDtos);
+    public ResponseEntity<MallCreateResponse> createMalls() {
+        List<MallOpenApiDto> mallOpenApiDto = mallService.fetchAndParseOpenApiData(); // 🔄 직접 OpenAPI 요청
+        int savedCount = mallService.saveAllMalls(mallOpenApiDto);
 
-        MallCreateResponse response = new MallCreateResponse(
-                200,
-                "OpenAPI에서 " + savedCount + "개의 데이터 수집 완료되었습니다"
-        );
-
+        MallCreateResponse response = new MallCreateResponse(200, "OpenAPI에서 " + savedCount + "개의 데이터 수집 완료되었습니다");
         return ResponseEntity.ok(response);
     }
 }
