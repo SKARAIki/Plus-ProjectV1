@@ -3,7 +3,7 @@ package com.example.seoulshoppingmall.domain.mall.dto.response;
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
 import lombok.Getter;
 
-@Getter
+
 public class MallResponseDto {
 
     private Long id;
@@ -74,5 +74,137 @@ public class MallResponseDto {
         this.memberWithdrawalMethod = mall.getMemberWithdrawalMethod();
         this.siteOpeningYear = mall.getSiteOpeningYear();
         this.monitoringDate = mall.getMonitoringDate();
+    }
+    //게터
+    public Long getId() {
+        return id;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public String getMallName() {
+        return mallName;
+    }
+
+    public String getDomainName() {
+        return domainName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getOperatorEmail() {
+        return operatorEmail;
+    }
+
+    public String getSalesNumber() {
+        return salesNumber;
+    }
+
+    public String getBusinessType() {
+        return businessType;
+    }
+
+    public String getInitialReportDate() {
+        return initialReportDate;
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public String getBusinessStatus() {
+        return businessStatus;
+    }
+
+    public int getOverallRating() {
+        return overallRating;
+    }
+
+    public int getBusinessInfoRating() {
+        return businessInfoRating;
+    }
+
+    public int getCancellationPolicyRating() {
+        return cancellationPolicyRating;
+    }
+
+    public int getPaymentMethodRating() {
+        return paymentMethodRating;
+    }
+
+    public int getTermsRating() {
+        return termsRating;
+    }
+
+    public int getPrivacySecurityRating() {
+        return privacySecurityRating;
+    }
+
+    public String getMainProducts() {
+        return mainProducts;
+    }
+
+    public String getCancellationPolicyAvailable() {
+        return cancellationPolicyAvailable;
+    }
+
+    public String getMandatoryDisplayItems() {
+        return mandatoryDisplayItems;
+    }
+
+    public String getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public String getTermsCompliance() {
+        return termsCompliance;
+    }
+
+    public String getPrivacyPolicy() {
+        return privacyPolicy;
+    }
+
+    public String getAdditionalPrivacyRequirements() {
+        return additionalPrivacyRequirements;
+    }
+
+    public String getPurchaseSafetyService() {
+        return purchaseSafetyService;
+    }
+
+    public String getSecureServerInstallation() {
+        return secureServerInstallation;
+    }
+
+    public String getCertificationMark() {
+        return certificationMark;
+    }
+
+    public String getDeliveryDateDisplay() {
+        return deliveryDateDisplay;
+    }
+
+    public String getReturnShippingCostResponsibility() {
+        return returnShippingCostResponsibility;
+    }
+
+    public String getCustomerComplaintBoard() {
+        return customerComplaintBoard;
+    }
+
+    public String getMemberWithdrawalMethod() {
+        return memberWithdrawalMethod;
+    }
+
+    public String getSiteOpeningYear() {
+        return siteOpeningYear;
+    }
+
+    public String getMonitoringDate() {
+        return monitoringDate;
     }
 }
