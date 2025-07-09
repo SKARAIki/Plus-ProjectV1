@@ -11,23 +11,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class MallService {
 
     private final MallRepository mallRepository;
 
-    public List<MallResponseDto> GetMallList(Integer overallRating, String businessStatus) {
-        List<Mall> malls;
+    public MallService(MallRepository mallRepository) {
+        this.mallRepository = mallRepository;
+    }
 
-        if (overallRating != null && businessStatus != null) {
-            malls = mallRepository.findByOverallRatingAndBusinessStatusOrderByMonitoringDateDesc(overallRating, businessStatus);
-        } else if (overallRating != null) {
-            malls = mallRepository.findByOverallRatingOrderByMonitoringDateDesc(overallRating);
-        } else if (businessStatus != null) {
-            malls = mallRepository.findByBusinessStatusOrderByMonitoringDateDesc(businessStatus);
-        } else {
-            malls = mallRepository.findAllByOrderByMonitoringDateDesc();
-        }
+    public List<MallResponseDto> GetMallList(Integer overallRating, String businessStatus) {
+        List<Mall> malls = mallRepository.searchMalls(overallRating, businessStatus);
+
         return malls.stream()
                 .map(MallResponseDto::new)
                 .collect(Collectors.toList());

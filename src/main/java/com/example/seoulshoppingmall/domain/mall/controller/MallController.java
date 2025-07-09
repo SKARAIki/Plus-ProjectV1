@@ -15,10 +15,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@RequiredArgsConstructor
 public class MallController {
 
     private final MallService mallService;
+
+    public MallController(MallService mallService) {
+        this.mallService = mallService;
+    }
 
     @GetMapping("/v3/malls")
     public ResponseEntity<ApiResponse<List<MallResponseDto>>> GetMallList(
