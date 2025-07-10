@@ -31,4 +31,24 @@ public class MallCursorRequestDto {
     public String getBusinessStatus() {
         return businessStatus;
     }
+
+    public void setMonitoringDateCursor(String monitoringDateCursor) {
+        this.monitoringDateCursor = monitoringDateCursor;
+    }
+
+    public void setIdCursor(Long idCursor) {
+        this.idCursor = idCursor;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public void setOverallRating(Integer overallRating) {
+        this.overallRating = overallRating;
+    }
+
+    public void setBusinessStatus(String businessStatus) {
+        this.businessStatus = businessStatus;
+    }
 }

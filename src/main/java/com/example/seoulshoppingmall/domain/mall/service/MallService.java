@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MallService {
@@ -20,7 +19,7 @@ public class MallService {
         this.mallRepository = mallRepository;
     }
 
-    public List<MallResponseDto> GetMallList(MallCursorRequestDto requestDto) {
+    public MallCursorResponseDto GetMallList(MallCursorRequestDto requestDto) {
         // 쿼리 실행
         List<Mall> malls = mallRepository.searchMalls(
                 requestDto.getMonitoringDateCursor(),
