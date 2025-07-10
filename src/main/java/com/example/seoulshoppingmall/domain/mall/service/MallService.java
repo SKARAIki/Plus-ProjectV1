@@ -23,8 +23,8 @@ public class MallService {
 
     // OpenAPI 호출, DTO 파싱
     public List<MallOpenApiDto> fetchAndParseOpenApiData(int start, int end) {
-        // 인증키 = 4c6a55624e6c796a37374256576363
-        String url = "http://openapi.seoul.go.kr:8088/4c6a55624e6c796a37374256576363/json/ServiceInternetShopInfo/" + start + "/" + end + "/";
+        // 인증키 =
+        String url = "http://openapi.seoul.go.kr:8088/(인증키)/json/ServiceInternetShopInfo/" + start + "/" + end + "/";
         // 기존 서울시 openapi http://openAPI.seoul.go.kr:8088/(인증키)/xml/ServiceInternetShopInfo/1/5/
         // keyword 값 넣어서 기능 더 만들어보기
 
