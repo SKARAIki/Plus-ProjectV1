@@ -1,0 +1,86 @@
+package com.example.seoulshoppingmall.domain.mall.dto.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.List;
+
+@Getter
+@AllArgsConstructor
+public class MallGetListResponseDto {
+    private int status;
+
+    private String message;
+
+    private List<GetMallListResponseDto> mallListResponseDtoList;
+
+    @Getter
+    @AllArgsConstructor
+    public static class GetMallListResponseDto {
+        private Long id;
+
+        private String businessName;
+
+        private String mallName;
+
+        private String domainName;
+
+        private String phoneName;
+
+        private String operatorEmail;
+
+        private String salesNumber;
+
+        private String businessType;
+
+        private String initialReportDate;
+
+        private String companyAddress;
+
+        private String businessStatus;
+
+        private int overallRating;
+
+        private int businessInfoRating;
+
+        private int cancellationPolicyRating;
+
+        private int paymentMethodRating;
+
+        private int termsRating;
+
+        private int privacySecurityRating;
+
+        private String mainProducts;
+
+        private String cancellationPolicyAvailable;
+
+        private String mandatoryDisplayItems;
+
+        private String paymentMethods;
+
+        private String termsCompliance;
+
+        private String privacyPolicy;
+
+        private String additionalPrivacyRequirements;
+
+        private String purchaseSafetyService;
+
+        private String secureServerInstallation;
+
+        private String certificationMark;
+
+        private String deliveryDateDisplay;
+
+        private String returnShippingCostResponsibility;
+
+        private String customerComplaintBoard;
+
+        private String memberWithdrawalMethod;
+
+        private String siteOpeningYear;
+
+        private String monitoringDate;
+    }
+}
