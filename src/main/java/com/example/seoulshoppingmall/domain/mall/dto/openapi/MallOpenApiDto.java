@@ -1,42 +1,107 @@
 package com.example.seoulshoppingmall.domain.mall.dto.openapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MallOpenApiDto  {
     // 속성
-        private String businessName;
-        private String mallName;
-        private String domainName;
-        private String phoneNumber;
-        private String operatorEmail;
-        private String salesNumber;
-        private String businessType;
-        private String initialReportDate;
-        private String companyAddress;
-        private String businessStatus;
-        private int overallRating;
-        private int businessInfoRating;
-        private int cancellationPolicyRating;
-        private int paymentMethodRating;
-        private int termsRating;
-        private int privacySecurityRating;
-        private String mainProducts;
-        private String cancellationPolicyAvailable;
-        private String mandatoryDisplayItems;
-        private String paymentMethods;
-        private String termsCompliance;
-        private String privacyPolicy;
-        private String additionalPrivacyRequirements;
-        private String purchaseSafetyService;
-        private String secureServerInstallation;
-        private String certificationMark;
-        private String deliveryDateDisplay;
-        private String returnShippingCostResponsibility;
-        private String customerComplaintBoard;
-        private String memberWithdrawalMethod;
-        private String siteOpeningYear;
-        private String monitoringDate;
+    // 기존 entity호출이 아닌 불러오는것이기 때문에 이름을 바꿔줘야함(홍태호 튜터님)
+    @JsonProperty("COMPANY")
+    private String businessName;
+
+    @JsonProperty("SHOP_NAME")
+    private String mallName;
+
+    @JsonProperty("DOMAIN_NAME")
+    private String domainName;
+
+    @JsonProperty("TEL")
+    private String phoneNumber;
+
+    @JsonProperty("EMAIL")
+    private String operatorEmail;
+
+    @JsonProperty("UPJONG_NBR")
+    private String salesNumber;
+
+    @JsonProperty("YPFORM")
+    private String businessType;
+
+    @JsonProperty("FIRST_HEO_DATE")
+    private String initialReportDate;
+
+    @JsonProperty("COM_ADDR")
+    private String companyAddress;
+
+    @JsonProperty("STAT_NM")
+    private String businessStatus;
+
+    @JsonProperty("TOT_RATINGPOINT")
+    private int overallRating;
+
+    @JsonProperty("CHOGI_RATINGPOINT")
+    private int businessInfoRating;
+
+    @JsonProperty("CHUNG_RATINGPOINT")
+    private int cancellationPolicyRating;
+
+    @JsonProperty("DEAL_RATINGPOINT")
+    private int paymentMethodRating;
+
+    @JsonProperty("PYOJUN_RATINGPOINT")
+    private int termsRating;
+
+    @JsonProperty("SECURITY_RATINGPOINT")
+    private int privacySecurityRating;
+
+    @JsonProperty("SERVICE")
+    private String mainProducts;
+
+    @JsonProperty("CHUNG")
+    private String cancellationPolicyAvailable;
+
+    @JsonProperty("CHOGI")
+    private String mandatoryDisplayItems;
+
+    @JsonProperty("GYULJE")
+    private String paymentMethods;
+
+    @JsonProperty("PYOJUN")
+    private String termsCompliance;
+
+    @JsonProperty("P_INFO_CARE")
+    private String privacyPolicy;
+
+    @JsonProperty("PER_INFO")
+    private String additionalPrivacyRequirements;
+
+    @JsonProperty("DEAL_CARE")
+    private String purchaseSafetyService;
+
+    @JsonProperty("SSL_YN")
+    private String secureServerInstallation;
+
+    @JsonProperty("INJEUNG")
+    private String certificationMark;
+
+    @JsonProperty("BAESONG_YEJEONG")
+    private String deliveryDateDisplay;
+
+    @JsonProperty("BAESONG")
+    private String returnShippingCostResponsibility;
+
+    @JsonProperty("CLIENT_BBS")
+    private String customerComplaintBoard;
+
+    @JsonProperty("LEAVE")
+    private String memberWithdrawalMethod;
+
+    @JsonProperty("KAESOL_YEAR")
+    private String siteOpeningYear;
+
+    @JsonProperty("REG_DATE")
+    private String monitoringDate;
 
     // 기본 생성자
     public MallOpenApiDto() {

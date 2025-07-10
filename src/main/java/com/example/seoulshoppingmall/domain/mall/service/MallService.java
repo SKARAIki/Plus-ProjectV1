@@ -1,10 +1,9 @@
 package com.example.seoulshoppingmall.domain.mall.service;
 
 import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
+import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiWrapper;
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
 import com.example.seoulshoppingmall.domain.mall.repository.MallRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,11 +21,31 @@ public class MallService {
 
     // OpenAPI 호출, DTO 파싱
     public List<MallOpenApiDto> fetchAndParseOpenApiData(int start, int end) {
-        String url = "http://openapi.seoul.go.kr:8088/4c6a55624e6c796a37374256576363/json/ServiceInternetShopInfo/1/100"; // 인증키 = 4c6a55624e6c796a37374256576363
+        String url = "http://openapi.seoul.go.kr:8088/4c6a55624e6c796a37374256576363/json/ServiceInternetShopInfo/" + start + "/" + end + "/";; // 인증키 = 4c6a55624e6c796a37374256576363
+        // http://openAPI.seoul.go.kr:8088/(인증키)/xml/ServiceInternetShopInfo/1/5/
         // RestTemplate - 외부 API를 요청할 때 사용하는 스프링툴(방선희 튜터님 피드백 참고)
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<MallOpenApiWrapper> response = restTemplate.getForEntity(url, MallOpenApiWrapper.class);
 
+        // row만 꺼내서 반환
+        //디버깅 이용하기 (홍태호 튜터님)
+        return response.getBody()
+                .getServiceInternetShopInfo()
+                .getRow();
+        }
+        public int saveAllMalls(List<MallOpenApiDto> mallDtos) {
+        List<Mall> malls = mallDtos.stream()
+                .map(Mall::fromDto) // DTO → Entity
+                .toList();
+
+        mallRepository.saveAll(malls); // DB 저장
+        return malls.size(); // 저장된 개수 반환
+        }
+    }
+
+
+
+    /*
         try {
             //json문자열을 java객체로 바꿔줌
             ObjectMapper objectMapper = new ObjectMapper();
@@ -59,4 +78,5 @@ public class MallService {
         // 개수반환
         return malls.size();
     }
-}
+
+     */

@@ -18,23 +18,23 @@ public class Mall{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @NotNull
+
     @Column(name = "business_name")
     private String businessName;
 
-    @NotNull
+
     @Column(name = "mall_name")
     private String mallName;
 
-    @NotNull
+
     @Column(name = "domain_name")
     private String domainName;
 
-    @NotNull
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @NotNull
+
     @Column(name = "operator_email")
     private String operatorEmail;
 
@@ -44,46 +44,46 @@ public class Mall{
     @Column(name = "business_type")
     private String businessType;
 
-    @NotNull
+
     @Column(name = "initial_report_date")
     private String initialReportDate;
 
-    @NotNull
+
     @Column(name = "company_address", length = 512)
     private String companyAddress;
 
-    @NotNull
+
     @Column(name = "business_status")
     private String businessStatus;
 
-    @NotNull
+
     @Column(name = "overall_rating")
     private int overallRating;
 
-    @NotNull
+
     @Column(name = "business_info_rating")
     private int businessInfoRating;
 
-    @NotNull
+
     @Column(name = "cancellation_policy_rating")
     private int cancellationPolicyRating;
 
-    @NotNull
+
     @Column(name = "payment_method_rating")
     private int paymentMethodRating;
 
-    @NotNull
+
     @Column(name = "terms_rating")
     private int termsRating;
 
-    @NotNull
+
     @Column(name = "privacy_security_rating")
     private int privacySecurityRating;
 
     @Column(name = "main_products")
     private String mainProducts;
 
-    @NotNull
+
     @Column(name = "cancellation_policy_available")
     private String cancellationPolicyAvailable;
 
@@ -93,18 +93,18 @@ public class Mall{
     @Column(name = "payment_methods")
     private String paymentMethods;
 
-    @NotNull
+
     @Column(name = "terms_compliance")
     private String termsCompliance;
 
-    @NotNull
+
     @Column(name = "privacy_policy")
     private String privacyPolicy;
 
     @Column(name = "additional_privacy_requirements")
     private String additionalPrivacyRequirements;
 
-    @NotNull
+
     @Column(name = "purchase_safety_service")
     private String purchaseSafetyService;
 
@@ -114,27 +114,27 @@ public class Mall{
     @Column(name = "certification_mark")
     private String certificationMark;
 
-    @NotNull
+
     @Column(name = "delivery_date_display")
     private String deliveryDateDisplay;
 
-    @NotNull
+
     @Column(name = "return_shipping_cost_responsibility")
     private String returnShippingCostResponsibility;
 
-    @NotNull
+
     @Column(name = "customer_complaint_board")
     private String customerComplaintBoard;
 
-    @NotNull
+
     @Column(name = "member_withdrawal_method")
     private String memberWithdrawalMethod;
 
-    @NotNull
+
     @Column(name = "site_opening_year")
     private String siteOpeningYear;
 
-    @NotNull
+
     @Column(name = "monitoring_date")
     private String monitoringDate;
 
@@ -338,39 +338,46 @@ public class Mall{
     public static Mall fromDto(MallOpenApiDto dto) {
         return new Mall(
                 null,
-                dto.getBusinessName(),
-                dto.getMallName(),
-                dto.getDomainName(),
-                dto.getPhoneNumber(),
-                dto.getOperatorEmail(),
-                dto.getSalesNumber(),
-                dto.getBusinessType(),
-                dto.getInitialReportDate(),
-                dto.getCompanyAddress(),
-                dto.getBusinessStatus(),
-                dto.getOverallRating(),
-                dto.getBusinessInfoRating(),
-                dto.getCancellationPolicyRating(),
-                dto.getPaymentMethodRating(),
-                dto.getTermsRating(),
-                dto.getPrivacySecurityRating(),
-                dto.getMainProducts(),
-                dto.getCancellationPolicyAvailable(),
-                dto.getMandatoryDisplayItems(),
-                dto.getPaymentMethods(),
-                dto.getTermsCompliance(),
-                dto.getPrivacyPolicy(),
-                dto.getAdditionalPrivacyRequirements(),
-                dto.getPurchaseSafetyService(),
-                dto.getSecureServerInstallation(),
-                dto.getCertificationMark(),
-                dto.getDeliveryDateDisplay(),
-                dto.getReturnShippingCostResponsibility(),
-                dto.getCustomerComplaintBoard(),
-                dto.getMemberWithdrawalMethod(),
-                dto.getSiteOpeningYear(),
-                dto.getMonitoringDate()
+                safeString(dto.getBusinessName()),
+                safeString(dto.getMallName()),
+                safeString(dto.getDomainName()),
+                safeString(dto.getPhoneNumber()),
+                safeString(dto.getOperatorEmail()),
+                safeString(dto.getSalesNumber()),
+                safeString(dto.getBusinessType()),
+                safeString(dto.getInitialReportDate()),
+                safeString(dto.getCompanyAddress()),
+                safeString(dto.getBusinessStatus()),
+                safeInteger(dto.getOverallRating()),
+                safeInteger(dto.getBusinessInfoRating()),
+                safeInteger(dto.getCancellationPolicyRating()),
+                safeInteger(dto.getPaymentMethodRating()),
+                safeInteger(dto.getTermsRating()),
+                safeInteger(dto.getPrivacySecurityRating()),
+                safeString(dto.getMainProducts()),
+                safeString(dto.getCancellationPolicyAvailable()),
+                safeString(dto.getMandatoryDisplayItems()),
+                safeString(dto.getPaymentMethods()),
+                safeString(dto.getTermsCompliance()),
+                safeString(dto.getPrivacyPolicy()),
+                safeString(dto.getAdditionalPrivacyRequirements()),
+                safeString(dto.getPurchaseSafetyService()),
+                safeString(dto.getSecureServerInstallation()),
+                safeString(dto.getCertificationMark()),
+                safeString(dto.getDeliveryDateDisplay()),
+                safeString(dto.getReturnShippingCostResponsibility()),
+                safeString(dto.getCustomerComplaintBoard()),
+                safeString(dto.getMemberWithdrawalMethod()),
+                safeString(dto.getSiteOpeningYear()),
+                safeString(dto.getMonitoringDate())
         );
+    }
+    private static String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+    private static Integer safeInteger(Integer value) {
+        return value != null ? value : 0;
     }
 
 }
