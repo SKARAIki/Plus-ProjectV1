@@ -31,9 +31,9 @@ public class ShoppingMallCsvService {
 
         //ShoppingMall타입으로 리스트 선언
         //엔티티 타입의 값만 반영 가능
-        //List<ShoppingMall> shoppingMallList = new ArrayList<>();
+        List<ShoppingMall> shoppingMallList = new ArrayList<>();
         //데이터를 담을 수 있는 최대 사이즈 선언
-        //final int rangeSize = 1000;
+        final int BATCH_SIZE = 1000;
 
         //받은 파일이 내용이 비워져 있으면 예외처리
         if (file.isEmpty()) {
@@ -62,6 +62,7 @@ public class ShoppingMallCsvService {
                 //없으면 값 있는 필드만 리스트에 반영
                 String[] fields = line.split(",",-1);
 
+                //열이 30개 미만이면 아래 로직 건너뜀 이상이면 진행
                 if (fields.length < 33) continue;
 
                 //trim(공백제거)
@@ -79,13 +80,25 @@ public class ShoppingMallCsvService {
                 );
 
                 //엔티티에 저장한 데이터 리스트에 반영
-                //shoppingMallList.add(shoppingMall);
+                shoppingMallList.add(shoppingMall);
 
-                shoppingMallCsvRepository.save(shoppingMall);
-                //break;
+                //리스트 사이즈가 rageSize보다 크거나 같을때 저장/같지 않거나 작을때 저장 종료
+                if(shoppingMallList.size() >= BATCH_SIZE){
+                    //데이터베이스에 리스트 내 데이터 저장
+                    shoppingMallCsvRepository.saveAll(shoppingMallList);
+                    //모든 요소만 제거(주의 : 내부에 모든 값이 제거되어 사이즈가 0이 됨 isEmpty도 true됨
+                    //리스트가 null이 되는것은 아님 빈 공간이라도 있으니
+                    shoppingMallList.clear();
+                }
             }
 
-            //와일문 끝나면 결과 반환
+            //리스트에 값이 존재할때 저장 진행/값이 없을때 저장 종료
+            if(!shoppingMallList.isEmpty()){
+                //남은 데이터 마무리로 저장
+                shoppingMallCsvRepository.saveAll(shoppingMallList);
+            }
+
+            //결과 반환
             return fileName + "을 업로드 및 저장하였습니다.";
         } catch (IOException e) {
             throw new FindException();
