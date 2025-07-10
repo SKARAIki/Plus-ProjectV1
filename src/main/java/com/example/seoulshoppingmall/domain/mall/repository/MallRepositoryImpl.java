@@ -19,7 +19,9 @@ public class MallRepositoryImpl implements MallRepositoryCustom{
     }
 
     @Override
-    public List<Mall> searchMalls(String cursorDate, Long cursorId, int size, Integer overallRating, String businessStatus) {
+    public List<Mall> searchMalls(
+            String cursorDate, Long cursorId, int size, Integer overallRating, String businessStatus
+    ) {
         QMall mall = QMall.mall;
         BooleanBuilder builder = new BooleanBuilder();
 

@@ -31,7 +31,7 @@ public class MallCursorRequestDto {
     public String getBusinessStatus() {
         return businessStatus;
     }
-
+    //setter 추가
     public void setMonitoringDateCursor(String monitoringDateCursor) {
         this.monitoringDateCursor = monitoringDateCursor;
     }
