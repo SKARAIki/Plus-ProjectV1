@@ -26,4 +26,3 @@ public class MallController {
        return mallService.getMallListService(overallRating, businessStatus);
     }
 }
-

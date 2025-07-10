@@ -93,7 +93,7 @@ public class Mall{
     private String paymentMethods;
 
     @NotNull
-    @Column(name = "terms_compliance", nullable = false)
+    @Column(name = "terms_compliance")
     private String termsCompliance;
 
     @NotNull
