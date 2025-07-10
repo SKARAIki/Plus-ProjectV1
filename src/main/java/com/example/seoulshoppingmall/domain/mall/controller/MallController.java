@@ -15,14 +15,13 @@ public class MallController {
 
     private final MallService mallService;
 
+
+
     @GetMapping("/v3/malls")
     public MallGetListResponseDto GetPagingListApi(
             @RequestParam(required = false) int overallRating,
             @RequestParam(required = false) String businessStatus
     ) {
-        System.out.println("overallRating = " + overallRating);
-        System.out.println("businessStatus = " + businessStatus);
-
-       return mallService.getMallListService(overallRating, businessStatus);
+       return mallService.getMallListFilterService(overallRating, businessStatus);
     }
 }
