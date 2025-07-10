@@ -1,9 +1,11 @@
 package com.example.seoulshoppingmall.domain.auth.controller;
 
+import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import com.example.seoulshoppingmall.domain.auth.dto.request.LoginRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.request.MemberCreateRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.response.LoginResponse;
 import com.example.seoulshoppingmall.domain.auth.dto.response.MemberCreateResponse;
+import com.example.seoulshoppingmall.domain.auth.dto.response.TokenResponse;
 import com.example.seoulshoppingmall.domain.auth.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +31,10 @@ public class MemberController {
      * 회원 가입 API
      */
     @PostMapping
-    public ResponseEntity<MemberCreateResponse> createMemberAPI(@RequestBody MemberCreateRequest requestDto) {
-        MemberCreateResponse responseDto = memberService.createMember(requestDto);
-        ResponseEntity<MemberCreateResponse> response = new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse<MemberCreateResponse>> createMemberAPI(@RequestBody MemberCreateRequest request) {
+        MemberCreateResponse memberData = memberService.createMember(request);
+        ResponseEntity<ApiResponse<MemberCreateResponse>> response = ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(HttpStatus.CREATED, "회원가입 성공", memberData));
         return response;
     }
 
@@ -39,9 +42,12 @@ public class MemberController {
      * 로그인 API
      */
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginAPI(@RequestBody LoginRequest requestDto) {
-        LoginResponse responseDto = memberService.login(requestDto);
-        ResponseEntity<LoginResponse> response = new ResponseEntity<>(responseDto, HttpStatus.OK);
+    public ResponseEntity<ApiResponse<TokenResponse>> loginAPI(@RequestBody LoginRequest request) {
+        LoginResponse loginResponse = memberService.login(request);
+        TokenResponse tokenResponse = loginResponse.getData();
+        ResponseEntity<ApiResponse<TokenResponse>> response = ResponseEntity.ok(
+                ApiResponse.success(HttpStatus.OK, "로그인 성공", tokenResponse)
+        );
         return response;
     }
 

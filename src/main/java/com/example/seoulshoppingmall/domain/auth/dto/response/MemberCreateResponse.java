@@ -16,4 +16,15 @@ public class MemberCreateResponse {
     }
 
     //기능
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

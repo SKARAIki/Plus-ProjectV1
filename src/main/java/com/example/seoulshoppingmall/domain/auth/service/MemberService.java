@@ -6,6 +6,7 @@ import com.example.seoulshoppingmall.domain.auth.dto.request.LoginRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.request.MemberCreateRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.response.LoginResponse;
 import com.example.seoulshoppingmall.domain.auth.dto.response.MemberCreateResponse;
+import com.example.seoulshoppingmall.domain.auth.dto.response.TokenResponse;
 import com.example.seoulshoppingmall.domain.auth.entity.Member;
 import com.example.seoulshoppingmall.domain.auth.repository.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -65,16 +66,16 @@ public class MemberService {
         String userEmail = requestDto.getEmail();
         String password = requestDto.getPassword();
 
-        //2.검증로직(이메일, 비밀번호 일치 확인)
+        //2.검증로직(이메일 확인)
         Member loginMember = memberRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 이메일입니다."));
 
         //3.비밀번호 확인 후, 일치 시 토큰 생성 및 반환
-        if (passwordEncoder.matches(password, loginMember.getPassword())) {
-            String token = jwtTokenProvider.createToken(loginMember);
-            return new LoginResponse(token);
-        } else {
+        if (!passwordEncoder.matches(password, loginMember.getPassword())) {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
+        String token = jwtTokenProvider.createToken(loginMember);
+        TokenResponse tokenResponse = new TokenResponse(token);
+        return new LoginResponse(200, "created", tokenResponse);
     }
 }

@@ -7,6 +7,7 @@ public class MemberCreateRequest {
     private String password;
 
     //생성자
+    public MemberCreateRequest() {}
 
     //기능
     public String getEmail() {

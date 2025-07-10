@@ -29,10 +29,6 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 50)
     private String memberName;
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
-
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -87,7 +83,4 @@ public class Member extends BaseTimeEntity {
         return memberName;
     }
 
-    public Role getRole() {
-        return role;
-    }
 }

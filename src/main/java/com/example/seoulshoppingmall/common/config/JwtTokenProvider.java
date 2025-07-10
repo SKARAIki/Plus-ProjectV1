@@ -1,26 +1,38 @@
 package com.example.seoulshoppingmall.common.config;
 
 import com.example.seoulshoppingmall.domain.auth.entity.Member;
-import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtTokenProvider {
-    // 비밀키의 경우 일반적으로 환경변수로 관리합니다.
-    // 편의를 위해 속성으로 선언해 놓고 사용하는 예시입니다.
-    private String secret = "long-long-long-long-long-long-long";
+    //속성
+    private String secret;
+    private final SecretKey key;
 
+    // JWT 앞에 붙는 접두사
+    public static final String BEARER_PREFIX = "Bearer ";
+
+    //생성자
+    public JwtTokenProvider(@Value("${jwt.secret}") String secret) {
+        this.secret = secret;
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
     /**
      * 토큰 만들기
      */
     public String createToken(Member member) {
         // 1. 서명 만들기
-        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+//        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
 
         // 2. 데이터 준비
         String subject = member.getId().toString(); // 사용자 준비
@@ -34,33 +46,87 @@ public class JwtTokenProvider {
                 .claim("email", "sparta@xxxx.com") // 💡 커스텀 하게 활용하는 방법
                 .claim("memberName", "lee")
                 .expiration(expiration)
-                .signWith(secretKey)
+                .signWith(key)
                 .compact();
-        return jwt;
+        return BEARER_PREFIX + jwt;
     }
 
     /**
-     * 토큰을 검증하고 memberId 를 반환합니다.(원래 검증, 반환 따로 해야함)
+     * 헤더에서 "Bearer <토큰>" 형식에서 토큰만 추출
      */
-    public Long verifyToken(String token) {
-        // 1. 서명 만들기
-        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+    public String extractToken(String header) {
+        if (header != null && header.startsWith(BEARER_PREFIX)) {
+            return header.substring(BEARER_PREFIX.length()); // "Bearer " 제거
+        }
+        return null;
+    }
 
-        // 2. 검증
+    /**
+     * 토큰에서 사용자 아이디(id)를 추출
+     */
+    public long extractId(String token) {
+//        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
         Claims claims = Jwts.parser()
-                .verifyWith(secretKey)
+                .setSigningKey(key) //비밀키 설정
+                .build() //파서 빌더 빌드
+                .parseClaimsJws(token) //토큰 파싱 및 검증
+                .getBody(); //파싱 결과에서 실제 내용Body
+
+        return Long.parseLong(claims.getSubject());
+    }
+
+    /**
+     * 토큰에서 사용자 이름(MemberName)을 추출
+     */
+    public String extractMemberName(String token) {
+//        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        Claims claims = Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject(); // setSubject로 저장했던 값 꺼냄
+    }
+
+    /**
+     * 토큰에서 이메일 추출
+     */
+    public String extractEmail(String token) {
+//        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
+        Claims claims = Jwts.parser()
+                .verifyWith(key)
                 .build()
                 .parseSignedClaims(token)
-                .getPayload();
+                .getBody();
 
-        // 2. 사용자 추출
-        String subject = claims.getSubject();
-        // String value1  = (String) claims.get("key1"); // 커스텀하게 설정한 요소 추출
+        return claims.get("email", String.class);
+    }
 
-        // 3. 타입 변환
-        Long id = Long.parseLong(subject);
-
-        // 4. 반환
-        return id;
+    /**
+     * 토큰이 유효한지 확인
+     * - 서명이 맞는지
+     * - 만료되지 않았는지
+     * - 형식이 맞는지 등 검증
+     */
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token); // 파싱 실패하면 예외 발생
+            return true;
+        } catch (SecurityException e) {
+            log.error("서명이 올바르지 않습니다.", e);
+        } catch (MalformedJwtException e) {
+            log.error("토큰 형식이 잘못되었습니다.", e);
+        } catch (ExpiredJwtException e) {
+            log.error("토큰이 만료되었습니다.", e);
+        } catch (UnsupportedJwtException e) {
+            log.error("지원하지 않는 토큰입니다.", e);
+        } catch (IllegalArgumentException e) {
+            log.error("토큰이 비어 있거나 잘못되었습니다.", e);
+        }
+        return false;
     }
 }

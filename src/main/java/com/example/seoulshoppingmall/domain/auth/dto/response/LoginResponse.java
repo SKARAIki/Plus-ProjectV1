@@ -2,15 +2,15 @@ package com.example.seoulshoppingmall.domain.auth.dto.response;
 
 public class LoginResponse {
     //속성
-    private final String token;
+    private final TokenResponse data;
 
     //생성자
-    public LoginResponse(String token) {
-        this.token = token;
+    public LoginResponse(TokenResponse data) {
+        this.data = data;
     }
 
     //기능
-    public String getToken() {
-        return token;
+    public TokenResponse getData() {
+        return data;
     }
 }

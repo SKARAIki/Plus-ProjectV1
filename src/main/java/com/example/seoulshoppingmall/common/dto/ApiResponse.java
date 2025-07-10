@@ -1,21 +1,27 @@
 package com.example.seoulshoppingmall.common.dto;
 
-import java.time.LocalDateTime;
+import org.springframework.http.HttpStatus;
 
 public class ApiResponse<T> {
-    //속성
     private final int status;
     private final String message;
     private final T data;
 
-    //생성자
-    public ApiResponse(int status, String message, T data) {
-        this.status = status;
+    private ApiResponse(HttpStatus status, String message, T data) {
+        this.status = status.value();
         this.message = message;
         this.data = data;
     }
 
-    //기능
+    // 성공 응답
+    public static <T> ApiResponse<T> success(HttpStatus status, String message, T data) {
+        return new ApiResponse<>(status, message, data);
+    }
+    // 실패 응답
+    public static ApiResponse<Void> error(HttpStatus status, String message) {
+        return new ApiResponse<>(status, message, null);
+    }
+
     public int getStatus() {
         return status;
     }
