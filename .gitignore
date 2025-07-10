@@ -39,3 +39,4 @@ out/
 .env
 ### properties ###
 *.properties
+seoul_store.sql
