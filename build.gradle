@@ -26,43 +26,15 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-
-    // 스프링시큐리티 암호코드만 기능하는 그래들
-    implementation 'org.springframework.security:spring-security-crypto'
-
-    // 롬복
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
-    // @Valid 기능(유효성검사)
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    // JWT - jjwt
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
-
-    //QueryDSL 기능
-    implementation 'io.github.openfeign.querydsl:querydsl-jpa:6.11'
-    annotationProcessor 'io.github.openfeign.querydsl:querydsl-apt:6.11:jpa'
 
     // bcrypt
     implementation 'at.favre.lib:bcrypt:0.10.2'
 
-    // Test - 테스트코드
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'com.h2database:h2' // ← 반드시 추가
 
 }
-def querydslDir = "$buildDir/generated/querydsl"
 
-tasks.withType(JavaCompile).configureEach {
-    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
-}
-sourceSets {
-    main.java.srcDirs += querydslDir
-}
 tasks.named('test') {
     useJUnitPlatform()
 }
