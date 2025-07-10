@@ -1,5 +1,6 @@
-package com.example.trendsixtown.global;
+package com.example.trendsixtown.common.exception.global;
 
+import com.example.trendsixtown.common.exception.fileException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
