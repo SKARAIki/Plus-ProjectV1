@@ -1,4 +1,4 @@
-package com.example.trendsixtown.global;
+package com.example.trendsixtown.common.exception.global;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

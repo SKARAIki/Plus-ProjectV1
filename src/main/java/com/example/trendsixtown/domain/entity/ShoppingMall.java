@@ -1,4 +1,4 @@
-package com.example.trendsixtown.entity;
+package com.example.trendsixtown.domain.entity;
 
 
 import jakarta.persistence.*;

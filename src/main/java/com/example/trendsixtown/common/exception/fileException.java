@@ -1,4 +1,4 @@
-package com.example.trendsixtown.global;
+package com.example.trendsixtown.common.exception;
 
 public class fileException extends RuntimeException {
 

@@ -1,6 +1,6 @@
-package com.example.trendsixtown.Controller;
+package com.example.trendsixtown.domain.Controller;
 
-import com.example.trendsixtown.service.ShoppingMallCsvService;
+import com.example.trendsixtown.domain.service.ShoppingMallCsvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor

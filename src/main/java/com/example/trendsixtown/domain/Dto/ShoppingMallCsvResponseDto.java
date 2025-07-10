@@ -1,4 +1,4 @@
-package com.example.trendsixtown.Dto;
+package com.example.trendsixtown.domain.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,7 @@
-package com.example.trendsixtown.service;
+package com.example.trendsixtown.domain.service;
 
-import com.example.trendsixtown.entity.ShoppingMall;
-import com.example.trendsixtown.repository.ShoppingMallCsvRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import com.example.trendsixtown.domain.entity.ShoppingMall;
+import com.example.trendsixtown.domain.repository.ShoppingMallCsvRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,10 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.module.FindException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
