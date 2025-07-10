@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "shopping_malls")
-public class Mall{
+public class Mall {
 
     /**
      * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
@@ -372,6 +372,7 @@ public class Mall{
                 safeString(dto.getMonitoringDate())
         );
     }
+
     private static String safeString(String value) {
         return value != null ? value : "";
     }

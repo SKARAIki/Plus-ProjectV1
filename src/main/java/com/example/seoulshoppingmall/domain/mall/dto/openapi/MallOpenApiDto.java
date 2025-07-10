@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 // JsonIgnoreProperties : json으로 파싱시에 없는 필드는 무시
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MallOpenApiDto  {
+public class MallOpenApiDto {
     // 속성
     // 기존 entity호출이 아닌 불러오는것이기 때문에 이름을 바꿔줘야함(홍태호 튜터님)
     // @JsonProperty : json데이터와 자바 객체간의 매핑할 필드명을 지정할 때 사용

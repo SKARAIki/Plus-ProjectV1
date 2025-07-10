@@ -38,9 +38,9 @@ public class MallService {
         return response.getBody()
                 .getServiceInternetShopInfo()
                 .getRow();
-        }
+    }
 
-        public int saveAllMalls(List<MallOpenApiDto> mallDtos) {
+    public int saveAllMalls(List<MallOpenApiDto> mallDtos) {
         // dto리스트를 엔티티리스트로 변환
         List<Mall> malls = mallDtos.stream()
                 .map(Mall::fromDto) // DTO → Entity
@@ -50,8 +50,8 @@ public class MallService {
         mallRepository.saveAll(malls);
         // 저장된 개수 반환(몇개 저장했는지)
         return malls.size();
-        }
     }
+}
     /*
         try {
             //json문자열을 java객체로 바꿔줌
