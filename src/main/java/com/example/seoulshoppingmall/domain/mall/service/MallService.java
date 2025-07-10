@@ -13,18 +13,24 @@ import java.util.List;
 @Service
 public class MallService {
 
+    // 의존성 주입
     private final MallRepository mallRepository;
 
+    // 생성자
     public MallService(MallRepository mallRepository) {
         this.mallRepository = mallRepository;
     }
 
     // OpenAPI 호출, DTO 파싱
     public List<MallOpenApiDto> fetchAndParseOpenApiData(int start, int end) {
-        String url = "http://openapi.seoul.go.kr:8088/4c6a55624e6c796a37374256576363/json/ServiceInternetShopInfo/" + start + "/" + end + "/";; // 인증키 = 4c6a55624e6c796a37374256576363
-        // http://openAPI.seoul.go.kr:8088/(인증키)/xml/ServiceInternetShopInfo/1/5/
+        // 인증키 = 4c6a55624e6c796a37374256576363
+        String url = "http://openapi.seoul.go.kr:8088/4c6a55624e6c796a37374256576363/json/ServiceInternetShopInfo/" + start + "/" + end + "/";
+        // 기존 서울시 openapi http://openAPI.seoul.go.kr:8088/(인증키)/xml/ServiceInternetShopInfo/1/5/
+        // keyword 값 넣어서 기능 더 만들어보기
+
         // RestTemplate - 외부 API를 요청할 때 사용하는 스프링툴(방선희 튜터님 피드백 참고)
         RestTemplate restTemplate = new RestTemplate();
+        // 결과를 객체로 파싱함
         ResponseEntity<MallOpenApiWrapper> response = restTemplate.getForEntity(url, MallOpenApiWrapper.class);
 
         // row만 꺼내서 반환
@@ -33,18 +39,19 @@ public class MallService {
                 .getServiceInternetShopInfo()
                 .getRow();
         }
+
         public int saveAllMalls(List<MallOpenApiDto> mallDtos) {
+        // dto리스트를 엔티티리스트로 변환
         List<Mall> malls = mallDtos.stream()
                 .map(Mall::fromDto) // DTO → Entity
                 .toList();
 
-        mallRepository.saveAll(malls); // DB 저장
-        return malls.size(); // 저장된 개수 반환
+        // DB 저장
+        mallRepository.saveAll(malls);
+        // 저장된 개수 반환(몇개 저장했는지)
+        return malls.size();
         }
     }
-
-
-
     /*
         try {
             //json문자열을 java객체로 바꿔줌
