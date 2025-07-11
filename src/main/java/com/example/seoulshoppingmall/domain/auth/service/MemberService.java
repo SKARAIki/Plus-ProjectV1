@@ -2,6 +2,10 @@ package com.example.seoulshoppingmall.domain.auth.service;
 
 import com.example.seoulshoppingmall.common.config.JwtTokenProvider;
 import com.example.seoulshoppingmall.common.config.PasswordEncoder;
+import com.example.seoulshoppingmall.domain.auth.Exception.DuplicateEmailException;
+import com.example.seoulshoppingmall.domain.auth.Exception.EmailNotFoundException;
+import com.example.seoulshoppingmall.domain.auth.Exception.InvalidPasswordException;
+import com.example.seoulshoppingmall.domain.auth.Exception.InvalidPasswordFormatException;
 import com.example.seoulshoppingmall.domain.auth.dto.request.LoginRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.request.MemberCreateRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.response.MemberCreateResponse;
@@ -37,12 +41,12 @@ public class MemberService {
         String memberName = requestDto.getMemberName();
         String password = requestDto.getPassword();
 
-        //2.검증로직(이메일 중복 체크, 비밀번호 검증)
+        //2.검증로직(이메일 중복 체크, 비밀번호 검증)x
         if (memberRepository.existsByEmail(email)) {
-            throw new RuntimeException("이미 존재하는 이메일입니다.");
+            throw new DuplicateEmailException("이미 존재하는 이메일입니다.");
         }
         if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).+$")) {
-            throw new RuntimeException("비밀번호는 대소문자, 숫자, 특수문자를 포함해야 합니다.");
+            throw new InvalidPasswordFormatException("비밀번호는 최소8자, 대소문자, 숫자, 특수문자를 포함해야 합니다.");
         }
 
         //3.비밀번호 암호화
@@ -56,7 +60,7 @@ public class MemberService {
         Long savedMemberId = savedMember.getId();
 
         //5.responseDto 만들기
-        MemberCreateResponse responseDto = new MemberCreateResponse(201, "created", savedMemberId);
+        MemberCreateResponse responseDto = new MemberCreateResponse(savedMemberId);
         return responseDto;
     }
 
@@ -71,11 +75,11 @@ public class MemberService {
 
         //2.검증로직(이메일 확인)
         Member loginMember = memberRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 이메일입니다."));
+                .orElseThrow(() -> new EmailNotFoundException("존재하지 않는 이메일입니다."));
 
         //3.비밀번호 확인 후, 일치 시 토큰 생성 및 반환
         if (!passwordEncoder.matches(password, loginMember.getPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+            throw new InvalidPasswordException("비밀번호가 일치하지 않습니다.");
         }
         String token = jwtTokenProvider.createToken(loginMember);
         LoginTokenResponse tokenResponse = new LoginTokenResponse(token);

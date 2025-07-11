@@ -33,7 +33,7 @@ public class MemberController {
     public ResponseEntity<ApiResponse<MemberCreateResponse>> createMemberAPI(@RequestBody MemberCreateRequest request) {
         MemberCreateResponse memberData = memberService.createMember(request);
         ResponseEntity<ApiResponse<MemberCreateResponse>> response = ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(HttpStatus.CREATED, "회원가입 성공", memberData));
+                .body(ApiResponse.success(HttpStatus.CREATED, "회원가입이 완료되었습니다", memberData));
         return response;
     }
 

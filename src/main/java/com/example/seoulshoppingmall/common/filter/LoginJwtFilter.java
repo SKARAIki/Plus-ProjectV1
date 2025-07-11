@@ -24,14 +24,14 @@ public class LoginJwtFilter implements Filter {
     /**
      * 토큰 검증 불필요한 경로들
      */
-    private static final Set<String> WHITELIST = Set.of(
+    private static final Set<String> WHITE_LIST = Set.of(
             "/api/members",
             "/api/members/login"
     );
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-        throws IOException, ServletException {
+            throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
@@ -40,7 +40,7 @@ public class LoginJwtFilter implements Filter {
         String auth = req.getHeader("Authorization");
 
         //회원가입, 로그인 요청은 통과 (Set에 저장된 값들을 내부적으로 순회하면서 입력된 uri와 같은 게 있는지 비교해서 확인)
-        if (WHITELIST.contains(uri)) {
+        if (WHITE_LIST.contains(uri)) {
             chain.doFilter(request, response);
             return;
         }
@@ -49,7 +49,7 @@ public class LoginJwtFilter implements Filter {
         Optional<String> optionalToken = jwtTokenProvider.extractToken(auth);
         //토큰이 null이면 다음줄 에러 처리
         if (optionalToken.isEmpty()) {
-            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT 토큰이 필요합니다.");
+            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "인증 정보가 누락되었습니다..");
             return;
         }
         //null이 아니면 토큰 꺼내기
@@ -61,11 +61,13 @@ public class LoginJwtFilter implements Filter {
             return;
         }
 
-        // 사용자 정보 저장 (memberName)
-        request.setAttribute("id", jwtTokenProvider.extractId(token));
-        request.setAttribute("memberName", jwtTokenProvider.extractMemberName(token));
-        request.setAttribute("email", jwtTokenProvider.extractEmail(token));
-
-        chain.doFilter(request, response);
+        //추후 다음 필터나 컨트롤러로 넘어가는 과정에서 사용자 정보를 전달할 필요가 있을 때 사용하기 위해 남겨둠
+        //request에 사용자 정보 저장 (id, memberName, email)
+//        request.setAttribute("id", jwtTokenProvider.extractId(token));
+//        request.setAttribute("memberName", jwtTokenProvider.extractMemberName(token));
+//        request.setAttribute("email", jwtTokenProvider.extractEmail(token));
+//
+//        chain.doFilter(request, response);
+//    }
     }
 }

@@ -70,19 +70,20 @@ public class JwtTokenProvider {
     /**
      *token에서 멤버 정보 파싱
      */
+    //토큰 유효성 검사 및 Claims 반환
     public Claims parseClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parser() //JWT 파서 생성
+                .setSigningKey(key)  //서명키 설정
+                .build()  //파서 완성
+                .parseClaimsJws(token)  //토큰 검증 및 파싱
+                .getBody();  //토큰 내부의 실제 데이터(claims) 꺼내옴 -> Claims 객체로 반환
     }
     /**
      * 토큰에서 사용자 아이디(id)를 추출
      */
     public long extractId(String token) {
-         Claims claims = parseClaims(token);
-        return Long.parseLong(claims.getSubject());
+         Claims claims = parseClaims(token);  //parseClaims() 호출해서 Claims 객체 받음
+        return Long.parseLong(claims.getSubject());  //
     }
 
     /**
