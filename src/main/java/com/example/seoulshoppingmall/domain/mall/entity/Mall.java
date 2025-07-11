@@ -1,6 +1,5 @@
 package com.example.seoulshoppingmall.domain.mall.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
