@@ -147,8 +147,7 @@ public class MallService {
         );
     }
         @Transactional(readOnly = true)
-        public List<MallGetListV1Response> getListMallsInfoProcess (Integer
-        overallRating, Collection < String > businessStatus){
+        public List<MallGetListV1Response> getListMallsInfoProcess (Integer overallRating, String businessStatus){
             // 깡통 malls 준비
             List<Mall> malls;
 

@@ -35,7 +35,7 @@ public class MallController {
     @GetMapping("/v1/malls")
     public ApiResponse<List<MallGetListV1Response>> getListMallsInfoApi(
             @Valid @RequestParam(required = false) Integer overallRating,
-            @Valid @RequestParam(required = false) Collection<String> businessStatus
+            @Valid @RequestParam(required = false) String businessStatus
     ) {
 
         List<MallGetListV1Response> listMallsInfoProcess

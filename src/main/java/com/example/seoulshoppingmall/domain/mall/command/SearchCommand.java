@@ -4,9 +4,9 @@ import java.util.Collection;
 
 public class SearchCommand {
     private final Integer overallRating;
-    private final Collection<String> businessStatus;
+    private final String businessStatus;
 
-    public SearchCommand(Integer overallRating, Collection<String> businessStatus) {
+    public SearchCommand(Integer overallRating, String businessStatus) {
         this.overallRating = overallRating;
         this.businessStatus = businessStatus;
     }

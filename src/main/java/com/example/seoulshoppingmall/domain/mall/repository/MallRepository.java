@@ -25,11 +25,11 @@ public interface MallRepository extends JpaRepository<Mall, Long>, MallRepositor
 
     // 전체평가 및 업소상태 복합적용 필터
 
-    List<Mall> findTop10ByOverallRatingAndBusinessStatusInOrderByMonitoringDateDesc(int overallRating,
-                                                                                    Collection<String> businessStatuses);
+    List<Mall> findTop10ByOverallRatingAndBusinessStatusOrderByMonitoringDateDesc(int overallRating,
+                                                                                    String businessStatuses);
 
-    default List<Mall> findTop10RatedMallsStatus(int overallRating, Collection<String> businessStatus) {
-        return findTop10ByOverallRatingAndBusinessStatusInOrderByMonitoringDateDesc(overallRating, businessStatus);
+    default List<Mall> findTop10RatedMallsStatus(int overallRating, String businessStatus) {
+        return findTop10ByOverallRatingAndBusinessStatusOrderByMonitoringDateDesc(overallRating, businessStatus);
     }
 
 
@@ -41,10 +41,10 @@ public interface MallRepository extends JpaRepository<Mall, Long>, MallRepositor
     }
 
     // 업소상태 필터 적용
-    List<Mall> findTop10ByBusinessStatusInOrderByMonitoringDateDesc(Collection<String> businessStatuses);
+    List<Mall> findTop10ByBusinessStatusOrderByMonitoringDateDesc(String businessStatuses);
 
-    default List<Mall> findTop10MallBusinessStatus(Collection<String> businessStatuses) {
-        return findTop10ByBusinessStatusInOrderByMonitoringDateDesc(businessStatuses);
+    default List<Mall> findTop10MallBusinessStatus(String businessStatuses) {
+        return findTop10ByBusinessStatusOrderByMonitoringDateDesc(businessStatuses);
     }
 
 }
