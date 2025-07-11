@@ -1,7 +1,5 @@
 package com.example.seoulshoppingmall.domain.mall.entity;
 
-import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
-import com.example.seoulshoppingmall.domain.auth.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
