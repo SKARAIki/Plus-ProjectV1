@@ -1,14 +1,12 @@
 package com.example.seoulshoppingmall.domain.mall.entity;
 
-import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
-import com.example.seoulshoppingmall.domain.auth.entity.Member;
+import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 
 @Entity
 @Table(name = "shopping_malls")
-public class Mall{
+public class Mall {
 
     /**
      * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
@@ -17,124 +15,101 @@ public class Mall{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @NotNull
-    @Column(name = "business_name")
+
+    @Column(name = "business_name", columnDefinition = "text")
     private String businessName;
 
-    @NotNull
-    @Column(name = "mall_name")
+    @Column(name = "mall_name", columnDefinition = "text")
     private String mallName;
 
-    @NotNull
-    @Column(name = "domain_name")
+    @Column(name = "domain_name", columnDefinition = "text")
     private String domainName;
 
-    @NotNull
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", columnDefinition = "text")
     private String phoneNumber;
 
-    @NotNull
-    @Column(name = "operator_email")
+    @Column(name = "operator_email", columnDefinition = "text")
     private String operatorEmail;
 
-    @Column(name = "sales_number")
+    @Column(name = "sales_number", columnDefinition = "text")
     private String salesNumber;
 
-    @Column(name = "business_type")
+    @Column(name = "business_type", columnDefinition = "text")
     private String businessType;
 
-    @NotNull
-    @Column(name = "initial_report_date")
+    @Column(name = "initial_report_date", columnDefinition = "text")
     private String initialReportDate;
 
-    @NotNull
-    @Column(name = "company_address", length = 512)
+    @Column(name = "company_address", columnDefinition = "text")
     private String companyAddress;
 
-    @NotNull
-    @Column(name = "business_status")
+    @Column(name = "business_status", columnDefinition = "text")
     private String businessStatus;
 
-    @NotNull
     @Column(name = "overall_rating")
     private int overallRating;
 
-    @NotNull
     @Column(name = "business_info_rating")
     private int businessInfoRating;
 
-    @NotNull
     @Column(name = "cancellation_policy_rating")
     private int cancellationPolicyRating;
 
-    @NotNull
     @Column(name = "payment_method_rating")
     private int paymentMethodRating;
 
-    @NotNull
     @Column(name = "terms_rating")
     private int termsRating;
 
-    @NotNull
     @Column(name = "privacy_security_rating")
     private int privacySecurityRating;
 
-    @Column(name = "main_products")
+    @Column(name = "main_products", columnDefinition = "text")
     private String mainProducts;
 
-    @NotNull
-    @Column(name = "cancellation_policy_available")
+    @Column(name = "cancellation_policy_available", columnDefinition = "text")
     private String cancellationPolicyAvailable;
 
-    @Column(name = "mandatory_display_items")
+    @Column(name = "mandatory_display_items", columnDefinition = "text")
     private String mandatoryDisplayItems;
 
-    @Column(name = "payment_methods")
+    @Column(name = "payment_methods", columnDefinition = "text")
     private String paymentMethods;
 
-    @NotNull
-    @Column(name = "terms_compliance", nullable = false)
+    @Column(name = "terms_compliance", columnDefinition = "text")
     private String termsCompliance;
 
-    @NotNull
-    @Column(name = "privacy_policy")
+    @Column(name = "privacy_policy", columnDefinition = "text")
     private String privacyPolicy;
 
-    @Column(name = "additional_privacy_requirements")
+    @Column(name = "additional_privacy_requirements", columnDefinition = "text")
     private String additionalPrivacyRequirements;
 
-    @NotNull
-    @Column(name = "purchase_safety_service")
+    @Column(name = "purchase_safety_service", columnDefinition = "text")
     private String purchaseSafetyService;
 
-    @Column(name = "secure_server_installation")
+    @Column(name = "secure_server_installation", columnDefinition = "text")
     private String secureServerInstallation;
 
-    @Column(name = "certification_mark")
+    @Column(name = "certification_mark", columnDefinition = "text")
     private String certificationMark;
 
-    @NotNull
-    @Column(name = "delivery_date_display")
+    @Column(name = "delivery_date_display", columnDefinition = "text")
     private String deliveryDateDisplay;
 
-    @NotNull
-    @Column(name = "return_shipping_cost_responsibility")
+    @Column(name = "return_shipping_cost_responsibility", columnDefinition = "text")
     private String returnShippingCostResponsibility;
 
-    @NotNull
-    @Column(name = "customer_complaint_board")
+    @Column(name = "customer_complaint_board", columnDefinition = "text")
     private String customerComplaintBoard;
 
-    @NotNull
-    @Column(name = "member_withdrawal_method")
+    @Column(name = "member_withdrawal_method", columnDefinition = "text")
     private String memberWithdrawalMethod;
 
-    @NotNull
-    @Column(name = "site_opening_year")
+    @Column(name = "site_opening_year", columnDefinition = "text")
     private String siteOpeningYear;
 
-    @NotNull
-    @Column(name = "monitoring_date")
+    @Column(name = "monitoring_date", columnDefinition = "text")
     private String monitoringDate;
 
 
@@ -245,27 +220,27 @@ public class Mall{
         return businessStatus;
     }
 
-    public Integer getOverallRating() {
+    public int getOverallRating() {
         return overallRating;
     }
 
-    public Integer getBusinessInfoRating() {
+    public int getBusinessInfoRating() {
         return businessInfoRating;
     }
 
-    public Integer getCancellationPolicyRating() {
+    public int getCancellationPolicyRating() {
         return cancellationPolicyRating;
     }
 
-    public Integer getPaymentMethodRating() {
+    public int getPaymentMethodRating() {
         return paymentMethodRating;
     }
 
-    public Integer getTermsRating() {
+    public int getTermsRating() {
         return termsRating;
     }
 
-    public Integer getPrivacySecurityRating() {
+    public int getPrivacySecurityRating() {
         return privacySecurityRating;
     }
 
@@ -331,5 +306,52 @@ public class Mall{
 
     public String getMonitoringDate() {
         return monitoringDate;
+    }
+
+    // MallService에서 쓰는 정적 메서드
+    public static Mall fromDto(MallOpenApiDto dto) {
+        return new Mall(
+                null,
+                safeString(dto.getBusinessName()),
+                safeString(dto.getMallName()),
+                safeString(dto.getDomainName()),
+                safeString(dto.getPhoneNumber()),
+                safeString(dto.getOperatorEmail()),
+                safeString(dto.getSalesNumber()),
+                safeString(dto.getBusinessType()),
+                safeString(dto.getInitialReportDate()),
+                safeString(dto.getCompanyAddress()),
+                safeString(dto.getBusinessStatus()),
+                safeInteger(dto.getOverallRating()),
+                safeInteger(dto.getBusinessInfoRating()),
+                safeInteger(dto.getCancellationPolicyRating()),
+                safeInteger(dto.getPaymentMethodRating()),
+                safeInteger(dto.getTermsRating()),
+                safeInteger(dto.getPrivacySecurityRating()),
+                safeString(dto.getMainProducts()),
+                safeString(dto.getCancellationPolicyAvailable()),
+                safeString(dto.getMandatoryDisplayItems()),
+                safeString(dto.getPaymentMethods()),
+                safeString(dto.getTermsCompliance()),
+                safeString(dto.getPrivacyPolicy()),
+                safeString(dto.getAdditionalPrivacyRequirements()),
+                safeString(dto.getPurchaseSafetyService()),
+                safeString(dto.getSecureServerInstallation()),
+                safeString(dto.getCertificationMark()),
+                safeString(dto.getDeliveryDateDisplay()),
+                safeString(dto.getReturnShippingCostResponsibility()),
+                safeString(dto.getCustomerComplaintBoard()),
+                safeString(dto.getMemberWithdrawalMethod()),
+                safeString(dto.getSiteOpeningYear()),
+                safeString(dto.getMonitoringDate())
+        );
+    }
+
+    private static String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+    private static Integer safeInteger(Integer value) {
+        return value != null ? value : 0;
     }
 }
