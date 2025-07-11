@@ -50,5 +50,4 @@ public class MallRepositoryImpl implements MallRepositoryCustom{
                 .limit(size)
                 .fetch();
     }
-
 }
