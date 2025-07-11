@@ -1,11 +1,11 @@
 package com.example.seoulshoppingmall.domain.mall.entity;
 
+import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "seoulcity_stores")
+@Table(name = "shopping_malls")
 public class Mall {
 
     /**
@@ -306,5 +306,52 @@ public class Mall {
 
     public String getMonitoringDate() {
         return monitoringDate;
+    }
+
+    // MallService에서 쓰는 정적 메서드
+    public static Mall fromDto(MallOpenApiDto dto) {
+        return new Mall(
+                null,
+                safeString(dto.getBusinessName()),
+                safeString(dto.getMallName()),
+                safeString(dto.getDomainName()),
+                safeString(dto.getPhoneNumber()),
+                safeString(dto.getOperatorEmail()),
+                safeString(dto.getSalesNumber()),
+                safeString(dto.getBusinessType()),
+                safeString(dto.getInitialReportDate()),
+                safeString(dto.getCompanyAddress()),
+                safeString(dto.getBusinessStatus()),
+                safeInteger(dto.getOverallRating()),
+                safeInteger(dto.getBusinessInfoRating()),
+                safeInteger(dto.getCancellationPolicyRating()),
+                safeInteger(dto.getPaymentMethodRating()),
+                safeInteger(dto.getTermsRating()),
+                safeInteger(dto.getPrivacySecurityRating()),
+                safeString(dto.getMainProducts()),
+                safeString(dto.getCancellationPolicyAvailable()),
+                safeString(dto.getMandatoryDisplayItems()),
+                safeString(dto.getPaymentMethods()),
+                safeString(dto.getTermsCompliance()),
+                safeString(dto.getPrivacyPolicy()),
+                safeString(dto.getAdditionalPrivacyRequirements()),
+                safeString(dto.getPurchaseSafetyService()),
+                safeString(dto.getSecureServerInstallation()),
+                safeString(dto.getCertificationMark()),
+                safeString(dto.getDeliveryDateDisplay()),
+                safeString(dto.getReturnShippingCostResponsibility()),
+                safeString(dto.getCustomerComplaintBoard()),
+                safeString(dto.getMemberWithdrawalMethod()),
+                safeString(dto.getSiteOpeningYear()),
+                safeString(dto.getMonitoringDate())
+        );
+    }
+
+    private static String safeString(String value) {
+        return value != null ? value : "";
+    }
+
+    private static Integer safeInteger(Integer value) {
+        return value != null ? value : 0;
     }
 }
