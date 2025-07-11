@@ -3,7 +3,6 @@ package com.example.seoulshoppingmall.domain.mall.controller;
 import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import com.example.seoulshoppingmall.domain.mall.dto.request.MallCursorRequestDto;
 import com.example.seoulshoppingmall.domain.mall.dto.response.MallCursorResponseDto;
-import com.example.seoulshoppingmall.domain.mall.exception.InvalidQueryParameterException;
 import com.example.seoulshoppingmall.domain.mall.service.MallService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,19 +30,17 @@ public class MallController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) Integer overallRating,
             @RequestParam(required = false) String businessStatus
-    ) {//유효성 검사
-        Optional.ofNullable(overallRating)
-                .filter(rating -> rating >= 0 && rating <= 3)
-                .orElseThrow(() -> new InvalidQueryParameterException("유효하지 않은 쿼리 파라미터입니다."));
+    ) {
+        MallCursorRequestDto requestDto = new MallCursorRequestDto(
+                cursorMonitoringDate,
+                cursorId,
+                size,
+                overallRating,
+                businessStatus
+        );
 
-        MallCursorRequestDto requestDto = new MallCursorRequestDto();
-        requestDto.setMonitoringDateCursor(cursorMonitoringDate);
-        requestDto.setIdCursor(cursorId);
-        requestDto.setSize(size);
-        requestDto.setOverallRating(overallRating);
-        requestDto.setBusinessStatus(businessStatus);
 
-        MallCursorResponseDto responseDto = mallService.GetMallList(requestDto);
+        MallCursorResponseDto responseDto = mallService.getMallList(requestDto);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공", responseDto));
     }

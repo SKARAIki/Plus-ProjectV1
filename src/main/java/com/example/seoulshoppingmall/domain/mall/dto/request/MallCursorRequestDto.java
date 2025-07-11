@@ -1,17 +1,34 @@
 package com.example.seoulshoppingmall.domain.mall.dto.request;
 
+import com.example.seoulshoppingmall.domain.mall.exception.InvalidQueryParameterException;
+
+import java.util.Optional;
+
 public class MallCursorRequestDto {
     //마지막으로 조회한 쇼핑몰의 monitoringDate 커서역할
-    private String monitoringDateCursor;
+    private final String monitoringDateCursor;
     //마지막으로 조회한 쇼핑몰의 ID (동일 날짜일 경우 정렬 보조)
-    private Long idCursor;
+    private final Long idCursor;
     //한 페이지에 가져올 데이터 수
-    private int size = 10;
+    private final int size;
     //검색 조건: 평점
-    private Integer overallRating;
+    private final Integer overallRating;
     //검색조건: 사업 상태
-    private String businessStatus;
-    //getter추가
+    private final String businessStatus;
+
+    public MallCursorRequestDto(
+            String monitoringDateCursor, Long idCursor, int size, Integer overallRating, String businessStatus
+    ) {
+        Optional.ofNullable(overallRating)
+                .filter(rating-> rating >= 0 && rating <=3)
+                .orElseThrow(() -> new InvalidQueryParameterException("유효하지 않은 쿼리 파라미터입니다."));
+        this.monitoringDateCursor = monitoringDateCursor;
+        this.idCursor = idCursor;
+        this.size = size;
+        this.overallRating = overallRating;
+        this.businessStatus = businessStatus;
+    }
+    //getter 추가
     public String getMonitoringDateCursor() {
         return monitoringDateCursor;
     }
@@ -31,24 +48,5 @@ public class MallCursorRequestDto {
     public String getBusinessStatus() {
         return businessStatus;
     }
-    //setter 추가
-    public void setMonitoringDateCursor(String monitoringDateCursor) {
-        this.monitoringDateCursor = monitoringDateCursor;
-    }
 
-    public void setIdCursor(Long idCursor) {
-        this.idCursor = idCursor;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setOverallRating(Integer overallRating) {
-        this.overallRating = overallRating;
-    }
-
-    public void setBusinessStatus(String businessStatus) {
-        this.businessStatus = businessStatus;
-    }
 }

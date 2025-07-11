@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class MallRepositoryImpl implements MallRepositoryCustom{
@@ -25,22 +26,22 @@ public class MallRepositoryImpl implements MallRepositoryCustom{
         QMall mall = QMall.mall;
         BooleanBuilder builder = new BooleanBuilder();
 
-        //커서 조건
-        if (cursorDate != null && cursorId != null) {
-            builder.and(
-                    mall.monitoringDate.lt(cursorDate)
-                            .or(mall.monitoringDate.eq(cursorDate).and(mall.Id.lt(cursorId)))
-            );
-        }
+        //커서 조건 Optional처리
+        Optional.ofNullable(cursorDate)
+                .flatMap(date -> Optional.ofNullable(cursorId)
+                        .map(id ->mall.monitoringDate.lt(date)
+                                .or(mall.monitoringDate.eq(date).and(mall.Id.lt(id))))
+                )
+                .ifPresent(builder::and);
         //필터 조건
-        //평점 조건이 있을 경우 추가
-        if (overallRating != null) {
-            builder.and(mall.overallRating.eq(overallRating));
-        }
+        //평점 조건 Optional처리
+        Optional.ofNullable(overallRating)
+                .map(mall.overallRating::eq)
+                .ifPresent(builder::and);
         //사업상태 조건이 있을 경우 추가
-        if (businessStatus != null) {
-            builder.and(mall.businessStatus.eq(businessStatus));
-        }
+        Optional.ofNullable(businessStatus)
+                .map(mall.businessStatus::eq)
+                .ifPresent(builder::and);
         //where절에 동적으로 생성된 조건을 추가
         return jpaQueryFactory
                 .selectFrom(mall)
