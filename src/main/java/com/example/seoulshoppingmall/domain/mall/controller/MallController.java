@@ -18,7 +18,7 @@ import com.example.seoulshoppingmall.domain.mall.dto.response.MallCreateResponse
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/malls")
+@RequestMapping("/api")
 public class MallController {
     private final MallService mallService;
 
