@@ -11,7 +11,7 @@ public class SearchCommand {
         this.businessStatus = businessStatus;
     }
     public boolean hasRating() {
-        if (this.overallRating != null) {
+        if (this.overallRating != null && this.overallRating >= 0 && this.overallRating <= 3) {
             return true;
         } else {
             return false;
