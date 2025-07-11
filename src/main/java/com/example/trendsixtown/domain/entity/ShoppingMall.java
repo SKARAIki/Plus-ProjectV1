@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="ShoppingMall")
+@Table(name = "Shopping_Mall")
 public class ShoppingMall {
 
     @Id
@@ -44,7 +44,8 @@ public class ShoppingMall {
     private String paymentMethods;
     private String termsCompliance;
     private String privacyPolicy;
-    private String additionalPrivacyRequirements;
+    //@Column(columnDefinition = "tinyint default 0")
+    private boolean additionalPrivacyRequirements;
     private String purchaseSafetyService;
     private String secureServerInstallation;
     private String certificationMark;
@@ -55,20 +56,20 @@ public class ShoppingMall {
     private String siteOpeningYear;
     private String monitoringDate;
 
-    public ShoppingMall (String additionalPrivacyRequirements,String businessInfoRating,
-                         String businessName,String businessStatus,String businessType,
-                         String cancellationPolicyAvailable,String cancellationPolicyRating,
-                         String certificationMark,String companyAddress,String customerComplaintBoard,
-                         String deliveryDateDisplay,String domainName,String initialReportDate,
-                         String mainProducts,String mallName,String mandatoryDisplayItems,
-                         String memberWithdrawalMethod,String monitoringDate,String operatorEmail
-                         ,String overallRating,String paymentMethodRating,String paymentMethods,
-                          String phoneNumber,String privacyPolicy,String privacySecurityRating
-                          ,String purchaseSafetyService,String returnShippingCostResponsibility,
-                          String salesNumber,String secureServerInstallation,
-                          String siteOpeningYear,String termsCompliance,String termsRating) {
+    public ShoppingMall(String additionalPrivacyRequirements, String businessInfoRating,
+                        String businessName, String businessStatus, String businessType,
+                        String cancellationPolicyAvailable, String cancellationPolicyRating,
+                        String certificationMark, String companyAddress, String customerComplaintBoard,
+                        String deliveryDateDisplay, String domainName, String initialReportDate,
+                        String mainProducts, String mallName, String mandatoryDisplayItems,
+                        String memberWithdrawalMethod, String monitoringDate, String operatorEmail
+            , String overallRating, String paymentMethodRating, String paymentMethods,
+                        String phoneNumber, String privacyPolicy, String privacySecurityRating
+            , String purchaseSafetyService, String returnShippingCostResponsibility,
+                        String salesNumber, String secureServerInstallation,
+                        String siteOpeningYear, String termsCompliance, String termsRating) {
 
-        this.businessName =businessName;
+        this.businessName = businessName;
         this.mallName = mallName;
         this.domainName = domainName;
         this.phoneNumber = phoneNumber;
@@ -87,11 +88,12 @@ public class ShoppingMall {
         this.privacySecurityRating = privacySecurityRating;
         this.mainProducts = mainProducts;
         this.cancellationPolicyAvailable = cancellationPolicyAvailable;
-        this.mandatoryDisplayItems =mandatoryDisplayItems;
+        this.mandatoryDisplayItems = mandatoryDisplayItems;
         this.paymentMethods = paymentMethods;
         this.termsCompliance = termsCompliance;
         this.privacyPolicy = privacyPolicy;
-        this.additionalPrivacyRequirements = additionalPrivacyRequirements;
+        //1일경우 true / 나머지는 false
+        this.additionalPrivacyRequirements = "1".equals(additionalPrivacyRequirements);
         this.purchaseSafetyService = purchaseSafetyService;
         this.secureServerInstallation = secureServerInstallation;
         this.certificationMark = certificationMark;
