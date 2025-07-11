@@ -14,11 +14,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundParamException.class)
     public ApiResponse<Void> handleNotFoundOverallRatingException() {
         return ApiResponse.error(HttpStatus.BAD_REQUEST, "필터 항목이 비어 있습니다");
-
-    @ExceptionHandler(InvalidQueryParameterException.class)
-    public ResponseEntity<ApiResponse<?>> handleInvalidQuery(InvalidQueryParameterException ex) {
-        ApiResponse<?> response = ApiResponse.error(HttpStatus.BAD_REQUEST, ex.getMessage());
-        return ResponseEntity.badRequest().body(response);
-
     }
-}
+        @ExceptionHandler(InvalidQueryParameterException.class)
+        public ResponseEntity<ApiResponse<?>> handleInvalidQuery (InvalidQueryParameterException ex){
+            ApiResponse<?> response = ApiResponse.error(HttpStatus.BAD_REQUEST, ex.getMessage());
+            return ResponseEntity.badRequest().body(response);
+
+        }
+    }
+

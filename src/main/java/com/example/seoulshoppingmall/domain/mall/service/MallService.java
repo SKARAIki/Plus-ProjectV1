@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.List;
@@ -59,9 +60,7 @@ public class MallService {
 
 
     @Transactional
-    public MallGetListResponseDto getMallListFilterService(
-            Integer overallRating, String businessStatus
-    ) {
+    public MallGetListResponseDto getMallListFilterService(Integer overallRating, String businessStatus) {
         List<Mall> malls = new ArrayList<>();
         // 리스트 조회
         //    - ‘전체평가’ 필터 조회
@@ -146,30 +145,33 @@ public class MallService {
         return new MallGetListResponseDto(
                 200, "성공", mallListResponseDtoList
         );
-      @Transactional(readOnly = true)
-    public List<MallGetListV1Response> getListMallsInfoProcess(Integer overallRating, Collection<String> businessStatus) {
-        // 깡통 malls 준비
-        List<Mall> malls;
-
-        SearchCommand searchCommand = new SearchCommand(overallRating, businessStatus);
-        boolean hasRating = searchCommand.hasRating();
-        boolean hasBusinessStatus = searchCommand.hasBusinessStatus();
-
-        if (hasRating && hasBusinessStatus) {
-            malls = mallRepository.findTop10RatedMallsStatus(overallRating, businessStatus);
-        } else if (hasRating) {
-            malls = mallRepository.findTop10RatedMall(overallRating);
-        } else if (hasBusinessStatus) {
-            malls = mallRepository.findTop10MallBusinessStatus(businessStatus);
-        } else {
-            throw new NotFoundParamException();
-        }
-
-        List<MallGetListV1Response> mallGetListV1Responses = malls
-                .stream()
-                .map(mall -> new MallGetListV1Response(mall))
-                .toList();
-        return mallGetListV1Responses;
-
     }
-}
+        @Transactional(readOnly = true)
+        public List<MallGetListV1Response> getListMallsInfoProcess (Integer
+        overallRating, Collection < String > businessStatus){
+            // 깡통 malls 준비
+            List<Mall> malls;
+
+            SearchCommand searchCommand = new SearchCommand(overallRating, businessStatus);
+            boolean hasRating = searchCommand.hasRating();
+            boolean hasBusinessStatus = searchCommand.hasBusinessStatus();
+
+            if (hasRating && hasBusinessStatus) {
+                malls = mallRepository.findTop10RatedMallsStatus(overallRating, businessStatus);
+            } else if (hasRating) {
+                malls = mallRepository.findTop10RatedMall(overallRating);
+            } else if (hasBusinessStatus) {
+                malls = mallRepository.findTop10MallBusinessStatus(businessStatus);
+            } else {
+                throw new NotFoundParamException();
+            }
+
+            List<MallGetListV1Response> mallGetListV1Responses = malls
+                    .stream()
+                    .map(mall -> new MallGetListV1Response(mall))
+                    .toList();
+            return mallGetListV1Responses;
+
+        }
+    }
+
