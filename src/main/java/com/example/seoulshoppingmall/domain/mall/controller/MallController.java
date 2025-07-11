@@ -43,7 +43,15 @@ public class MallController {
         ApiResponse<List<MallGetListV1Response>> success
                 = ApiResponse.success(HttpStatus.OK, "성공", listMallsInfoProcess);
         return success;
-      
+    }
+
+    @GetMapping("/v2/malls")
+    public MallGetListResponseDto GetPagingListApi(
+            @RequestParam(required = false) Integer overallRating,
+            @RequestParam(required = false) String businessStatus
+    ) {
+        return mallService.getMallListFilterService(overallRating, businessStatus);
+    }
     @GetMapping("/v3/malls")
     public ResponseEntity<ApiResponse<MallCursorResponseDto>> GetMallList(
             @RequestParam(required = false) String cursorMonitoringDate,
@@ -60,18 +68,8 @@ public class MallController {
                 businessStatus
         );
 
-
         MallCursorResponseDto responseDto = mallService.getMallList(requestDto);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공", responseDto));
-    }
-
-    @GetMapping("/v2/malls")
-    public MallGetListResponseDto GetPagingListApi(
-            @RequestParam(required = false) Integer overallRating,
-            @RequestParam(required = false) String businessStatus
-    ) {
-       return mallService.getMallListFilterService(overallRating, businessStatus);
-
     }
 }
