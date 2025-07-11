@@ -45,7 +45,7 @@ public class ShoppingMall {
     private String termsCompliance;
     private String privacyPolicy;
     //@Column(columnDefinition = "tinyint default 0")
-    private boolean additionalPrivacyRequirements;
+    private String additionalPrivacyRequirements;
     private String purchaseSafetyService;
     private String secureServerInstallation;
     private String certificationMark;
@@ -92,8 +92,8 @@ public class ShoppingMall {
         this.paymentMethods = paymentMethods;
         this.termsCompliance = termsCompliance;
         this.privacyPolicy = privacyPolicy;
-        //1일경우 true / 나머지는 false
-        this.additionalPrivacyRequirements = "1".equals(additionalPrivacyRequirements);
+        //"1".equals(additionalPrivacyRequirements) = 1일경우 true / 나머지는 false
+        this.additionalPrivacyRequirements = additionalPrivacyRequirements;
         this.purchaseSafetyService = purchaseSafetyService;
         this.secureServerInstallation = secureServerInstallation;
         this.certificationMark = certificationMark;

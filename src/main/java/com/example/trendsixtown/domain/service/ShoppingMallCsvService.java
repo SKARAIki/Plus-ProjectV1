@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.module.FindException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -47,24 +48,24 @@ public class ShoppingMallCsvService {
                             collect(Collectors.toList());
 
         }
-        List<List<String>> chunks = splitIntoChunks(allLines,CHUNK_SIZE);
+        List<List<String>> shoppingMallChunks = splitIntoChunks(allLines,CHUNK_SIZE);
 
-        for(List<String> chunk : chunks){
+        for(List<String> shoppingMallChunk : shoppingMallChunks){
             futures.add(executorService.submit(()->{
-                List<ShoppingMall> entites = chunk.stream()
+                List<ShoppingMall> shoppingMallEntity = shoppingMallChunk.stream()
                         .map(this::getShoppingMall)
                         .filter(Objects::nonNull)
                         .toList();
 
-                shoppingMallCsvRepository.saveAll(entites);
+                shoppingMallCsvRepository.saveAll(shoppingMallEntity);
             }));
         }
 
         for(Future<?> future : futures){
             try {
                 future.get();
-            } catch (Exception e){
-               e.printStackTrace();
+            } catch (InterruptedException | ExecutionException e){
+               throw new fileException();
             }
         }
 
@@ -119,6 +120,9 @@ public class ShoppingMallCsvService {
         //필드 내 값이 없어도 한 공간으로 판단해서 리스트에 반영 설정 -1이
         //없으면 값 있는 필드만 리스트에 반영
         String[] fields = line.split(",", -1);
+        String[] cleanedFields = Arrays.stream(fields)
+                .map(s -> s.replace("\"",""))
+                .toArray(String[]::new);
 
         //열이 30개 미만이면 아래 로직 건너뜀 이상이면 진행
         if (fields.length < 33)
@@ -127,13 +131,14 @@ public class ShoppingMallCsvService {
             return new ShoppingMall(
                     //문자열을 Long 타입으로 변환 & 문자열을 int 타입으로 변환
                     //Long.parseLong(fields[0]),Integer.getInteger(fields[0])
-                    fields[22].replace("\"", ""), fields[11].replace("\"", ""), fields[0], fields[9], fields[6],
-                    fields[17], fields[13], fields[25], fields[8], fields[28],
-                    fields[26], fields[2], fields[7], fields[16], fields[1],
-                    fields[18], fields[29], fields[31], fields[4], fields[10],
-                    fields[13], fields[19], fields[3], fields[21], fields[15],
-                    fields[23], fields[27], fields[5], fields[24], fields[30],
-                    fields[20], fields[14]
+                    cleanedFields[22],cleanedFields[11],cleanedFields[0],cleanedFields[9],
+                    cleanedFields[6],cleanedFields[17],cleanedFields[13],cleanedFields[25],
+                    cleanedFields[8],cleanedFields[28],cleanedFields[26],cleanedFields[2],
+                    cleanedFields[7],cleanedFields[16],cleanedFields[1],cleanedFields[18],cleanedFields[29],
+                    cleanedFields[31],cleanedFields[4],cleanedFields[10],
+                    cleanedFields[13],cleanedFields[19],cleanedFields[3],cleanedFields[21],cleanedFields[15],
+                    cleanedFields[23],cleanedFields[27],cleanedFields[5],cleanedFields[24],cleanedFields[30],
+                    cleanedFields[20],cleanedFields[14]
             );
 
 
