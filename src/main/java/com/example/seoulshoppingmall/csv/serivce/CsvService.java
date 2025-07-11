@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -59,12 +60,12 @@ public class CsvService {
                     .build()
                     .parse();
 
+            List<Mall> mallInfoList = mallInfoCsvParse.stream()
+                    .map(mallInfoCsv -> mallInfoCsv.toEntity())
+                    .collect(Collectors.toList());
 
-            for (MallInfoCsv mallInfoCsv : mallInfoCsvParse) {
-                log.info(">> CSV Bean: {}", mallInfoCsv);
-                Mall mallEntity = mallInfoCsv.toEntity();
-                mallRepository.save(mallEntity);
-            }
+            mallRepository.saveAll(mallInfoList);
+
             ApiResponse<Object> success
                     = ApiResponse.success(HttpStatus.CREATED, "CSV파일이 DB에 업로드 되었습니다", "");
             return success;
