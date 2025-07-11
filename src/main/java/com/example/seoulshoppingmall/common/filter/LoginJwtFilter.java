@@ -67,7 +67,7 @@ public class LoginJwtFilter implements Filter {
 //        request.setAttribute("memberName", jwtTokenProvider.extractMemberName(token));
 //        request.setAttribute("email", jwtTokenProvider.extractEmail(token));
 //
-//        chain.doFilter(request, response);
+        chain.doFilter(request, response);
 //    }
     }
 }

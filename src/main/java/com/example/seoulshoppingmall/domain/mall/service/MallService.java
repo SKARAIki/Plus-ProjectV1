@@ -70,7 +70,6 @@ public class MallService {
             nextCursor = MallCursor.EMPTY;
         }
 
-
         return new MallCursorResponseDto(dtoList, nextCursor.getMonitoringDate(), nextCursor.getId());
     }
 
