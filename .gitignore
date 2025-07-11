@@ -40,3 +40,5 @@ out/
 ### properties ###
 *.properties
 seoul_store.sql
+.DS_Store
+.DS_Store
