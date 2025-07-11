@@ -19,7 +19,7 @@ public class MallController {
 
     @GetMapping("/v3/malls")
     public MallGetListResponseDto GetPagingListApi(
-            @RequestParam(required = false) int overallRating,
+            @RequestParam(required = false) Integer overallRating,
             @RequestParam(required = false) String businessStatus
     ) {
        return mallService.getMallListFilterService(overallRating, businessStatus);

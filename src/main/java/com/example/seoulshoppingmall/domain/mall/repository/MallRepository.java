@@ -1,7 +1,6 @@
 package com.example.seoulshoppingmall.domain.mall.repository;
 
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,8 +17,12 @@ import java.util.List;
 //-
 //
 public interface MallRepository extends JpaRepository<Mall, Long> {
-    List<Mall> findTop10OverallRating(Integer overallRating);
-    List<Mall> findTop10businessStatus(String businessStatus);
+    List<Mall> findTop10ByOverallRating(
+            Integer overallRating, Pageable pageable
+    );
+    List<Mall> findTop10ByBusinessStatus(
+            String businessStatus, Pageable pageable
+    );
     List<Mall> findTop10ByOverallRatingAndBusinessStatus(
             Integer overallRating, String businessStatus, Pageable pageable
     );

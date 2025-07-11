@@ -1,22 +1,28 @@
 package com.example.seoulshoppingmall.domain.mall.dto.response;
 
+import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+//디티오는 게터 써도 괜찮아서 편의를 위해
 @Getter
+//생성자 자동 생성
 @AllArgsConstructor
 public class MallGetListResponseDto {
     private int status;
 
     private String message;
 
-    private List<GetMallListResponseDto> mallListResponseDtoList;
+    private List<Malls> mallListResponseDtoList;
 
-    @Getter
+    //생성자 자동 생성
     @AllArgsConstructor
-    public static class GetMallListResponseDto {
+    //디티오는 게터 써도 괜찮아서 편의를 위해
+    @Getter
+    public static class Malls {
         private Long id;
 
         private String businessName;
@@ -25,7 +31,7 @@ public class MallGetListResponseDto {
 
         private String domainName;
 
-        private String phoneName;
+        private String phoneNumber;
 
         private String operatorEmail;
 
