@@ -1,10 +1,8 @@
 package com.example.seoulshoppingmall.domain.mall.entity;
 
-import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
-import com.example.seoulshoppingmall.domain.auth.entity.Member;
 import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "shopping_malls")
@@ -17,34 +15,35 @@ public class Mall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(name = "business_name")
+
+    @Column(name = "business_name", columnDefinition = "text")
     private String businessName;
 
-    @Column(name = "mall_name")
+    @Column(name = "mall_name", columnDefinition = "text")
     private String mallName;
 
-    @Column(name = "domain_name")
+    @Column(name = "domain_name", columnDefinition = "text")
     private String domainName;
 
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", columnDefinition = "text")
     private String phoneNumber;
 
-    @Column(name = "operator_email")
+    @Column(name = "operator_email", columnDefinition = "text")
     private String operatorEmail;
 
-    @Column(name = "sales_number")
+    @Column(name = "sales_number", columnDefinition = "text")
     private String salesNumber;
 
-    @Column(name = "business_type")
+    @Column(name = "business_type", columnDefinition = "text")
     private String businessType;
 
-    @Column(name = "initial_report_date")
+    @Column(name = "initial_report_date", columnDefinition = "text")
     private String initialReportDate;
 
-    @Column(name = "company_address", length = 512)
+    @Column(name = "company_address", columnDefinition = "text")
     private String companyAddress;
 
-    @Column(name = "business_status")
+    @Column(name = "business_status", columnDefinition = "text")
     private String businessStatus;
 
     @Column(name = "overall_rating")
@@ -65,53 +64,54 @@ public class Mall {
     @Column(name = "privacy_security_rating")
     private int privacySecurityRating;
 
-    @Column(name = "main_products")
+    @Column(name = "main_products", columnDefinition = "text")
     private String mainProducts;
 
-    @Column(name = "cancellation_policy_available")
+    @Column(name = "cancellation_policy_available", columnDefinition = "text")
     private String cancellationPolicyAvailable;
 
-    @Column(name = "mandatory_display_items")
+    @Column(name = "mandatory_display_items", columnDefinition = "text")
     private String mandatoryDisplayItems;
 
-    @Column(name = "payment_methods")
+    @Column(name = "payment_methods", columnDefinition = "text")
     private String paymentMethods;
 
-    @Column(name = "terms_compliance")
+    @Column(name = "terms_compliance", columnDefinition = "text")
     private String termsCompliance;
 
-    @Column(name = "privacy_policy")
+    @Column(name = "privacy_policy", columnDefinition = "text")
     private String privacyPolicy;
 
-    @Column(name = "additional_privacy_requirements")
+    @Column(name = "additional_privacy_requirements", columnDefinition = "text")
     private String additionalPrivacyRequirements;
 
-    @Column(name = "purchase_safety_service")
+    @Column(name = "purchase_safety_service", columnDefinition = "text")
     private String purchaseSafetyService;
 
-    @Column(name = "secure_server_installation")
+    @Column(name = "secure_server_installation", columnDefinition = "text")
     private String secureServerInstallation;
 
-    @Column(name = "certification_mark")
+    @Column(name = "certification_mark", columnDefinition = "text")
     private String certificationMark;
 
-    @Column(name = "delivery_date_display")
+    @Column(name = "delivery_date_display", columnDefinition = "text")
     private String deliveryDateDisplay;
 
-    @Column(name = "return_shipping_cost_responsibility")
+    @Column(name = "return_shipping_cost_responsibility", columnDefinition = "text")
     private String returnShippingCostResponsibility;
 
-    @Column(name = "customer_complaint_board")
+    @Column(name = "customer_complaint_board", columnDefinition = "text")
     private String customerComplaintBoard;
 
-    @Column(name = "member_withdrawal_method")
+    @Column(name = "member_withdrawal_method", columnDefinition = "text")
     private String memberWithdrawalMethod;
 
-    @Column(name = "site_opening_year")
+    @Column(name = "site_opening_year", columnDefinition = "text")
     private String siteOpeningYear;
 
-    @Column(name = "monitoring_date")
+    @Column(name = "monitoring_date", columnDefinition = "text")
     private String monitoringDate;
+
 
     /**
      * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
@@ -220,27 +220,27 @@ public class Mall {
         return businessStatus;
     }
 
-    public Integer getOverallRating() {
+    public int getOverallRating() {
         return overallRating;
     }
 
-    public Integer getBusinessInfoRating() {
+    public int getBusinessInfoRating() {
         return businessInfoRating;
     }
 
-    public Integer getCancellationPolicyRating() {
+    public int getCancellationPolicyRating() {
         return cancellationPolicyRating;
     }
 
-    public Integer getPaymentMethodRating() {
+    public int getPaymentMethodRating() {
         return paymentMethodRating;
     }
 
-    public Integer getTermsRating() {
+    public int getTermsRating() {
         return termsRating;
     }
 
-    public Integer getPrivacySecurityRating() {
+    public int getPrivacySecurityRating() {
         return privacySecurityRating;
     }
 
