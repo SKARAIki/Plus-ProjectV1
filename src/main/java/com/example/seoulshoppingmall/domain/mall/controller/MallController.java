@@ -51,6 +51,7 @@ public class MallController {
     ) {
         return mallService.getMallListFilterService(overallRating, businessStatus);
     }
+
     @GetMapping("/v3/malls")
     public ResponseEntity<ApiResponse<MallCursorResponseDto>> GetMallList(
             @RequestParam(required = false) String cursorMonitoringDate,
@@ -70,8 +71,6 @@ public class MallController {
         MallCursorResponseDto responseDto = mallService.getMallList(requestDto);
 
         return ResponseEntity.ok(ApiResponse.success(HttpStatus.OK, "성공", responseDto));
-
-
     }
 
     // keyword가 있을경우 필터링된 데이터만 저장, 없으면 전체저장
