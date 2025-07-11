@@ -25,6 +25,6 @@ public class ShoppingMallCsvController {
 
         String cvs = shoppingMallCsvService.uploadCsv(file);
 
-        return new ResponseEntity<>(ApiResponse.success(HttpStatus.OK,cvs,"CSV 전송 및 업로드 완료"),HttpStatus.OK);
+        return new ResponseEntity<>(ApiResponse.success(HttpStatus.OK,"CSV 전송 및 업로드 완료",cvs),HttpStatus.OK);
     }
 }
