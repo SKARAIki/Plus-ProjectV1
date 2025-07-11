@@ -3,6 +3,7 @@ package com.example.seoulshoppingmall.domain.mall.service;
 import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiWrapper;
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
+import com.example.seoulshoppingmall.domain.mall.exception.OpenApiException;
 import com.example.seoulshoppingmall.domain.mall.repository.MallRepository;
 import org.springframework.beans.factory.annotation.Value;
 import jakarta.transaction.Transactional;
@@ -36,15 +37,26 @@ public class MallService {
     public List<MallOpenApiDto> fetchAndParseOpenApiData(int start, int end) {
         String url = String.format("%s/%s/%s/%s/%d/%d/", baseUrl, authKey, format, service, start, end);
 
-        // RestTemplate - 외부 API를 요청할 때 사용하는 스프링툴
-        RestTemplate restTemplate = new RestTemplate();
-        // 결과를 객체로 파싱함
-        ResponseEntity<MallOpenApiWrapper> response = restTemplate.getForEntity(url, MallOpenApiWrapper.class);
+        // RestTemplate - 외부 API를 요청할 때 사용하는 스프링툴 + 예외 추가
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<MallOpenApiWrapper> response = restTemplate.getForEntity(url, MallOpenApiWrapper.class);
 
-        // row만 꺼내서 반환
-        return response.getBody()
-                .getServiceInternetShopInfo()
-                .getRow();
+            // API 잘못됐을 때
+            if (response.getBody() == null ||
+                    response.getBody().getServiceInternetShopInfo() == null ||
+                    response.getBody().getServiceInternetShopInfo().getRow() == null) {
+                throw new OpenApiException("OpenAPI 응답이 올바르지 않습니다.");
+            }
+
+            // row만 꺼내서 반환
+            return response.getBody()
+                    .getServiceInternetShopInfo()
+                    .getRow();
+        } catch (Exception e) {
+            // 예외 발생 시 커스텀 예외 던지기
+            throw new OpenApiException("OpenAPI 호출 실패: " + e.getMessage());
+        }
     }
 
     // 키워드 기반 필터링
