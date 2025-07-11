@@ -6,7 +6,6 @@ import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-
 @Entity
 @Table(name = "shopping_malls")
 public class Mall {
@@ -18,22 +17,17 @@ public class Mall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-
     @Column(name = "business_name")
     private String businessName;
-
 
     @Column(name = "mall_name")
     private String mallName;
 
-
     @Column(name = "domain_name")
     private String domainName;
 
-
     @Column(name = "phone_number")
     private String phoneNumber;
-
 
     @Column(name = "operator_email")
     private String operatorEmail;
@@ -44,45 +38,35 @@ public class Mall {
     @Column(name = "business_type")
     private String businessType;
 
-
     @Column(name = "initial_report_date")
     private String initialReportDate;
-
 
     @Column(name = "company_address", length = 512)
     private String companyAddress;
 
-
     @Column(name = "business_status")
     private String businessStatus;
-
 
     @Column(name = "overall_rating")
     private int overallRating;
 
-
     @Column(name = "business_info_rating")
     private int businessInfoRating;
-
 
     @Column(name = "cancellation_policy_rating")
     private int cancellationPolicyRating;
 
-
     @Column(name = "payment_method_rating")
     private int paymentMethodRating;
 
-
     @Column(name = "terms_rating")
     private int termsRating;
-
 
     @Column(name = "privacy_security_rating")
     private int privacySecurityRating;
 
     @Column(name = "main_products")
     private String mainProducts;
-
 
     @Column(name = "cancellation_policy_available")
     private String cancellationPolicyAvailable;
@@ -93,17 +77,14 @@ public class Mall {
     @Column(name = "payment_methods")
     private String paymentMethods;
 
-
     @Column(name = "terms_compliance")
     private String termsCompliance;
-
 
     @Column(name = "privacy_policy")
     private String privacyPolicy;
 
     @Column(name = "additional_privacy_requirements")
     private String additionalPrivacyRequirements;
-
 
     @Column(name = "purchase_safety_service")
     private String purchaseSafetyService;
@@ -114,30 +95,23 @@ public class Mall {
     @Column(name = "certification_mark")
     private String certificationMark;
 
-
     @Column(name = "delivery_date_display")
     private String deliveryDateDisplay;
-
 
     @Column(name = "return_shipping_cost_responsibility")
     private String returnShippingCostResponsibility;
 
-
     @Column(name = "customer_complaint_board")
     private String customerComplaintBoard;
-
 
     @Column(name = "member_withdrawal_method")
     private String memberWithdrawalMethod;
 
-
     @Column(name = "site_opening_year")
     private String siteOpeningYear;
 
-
     @Column(name = "monitoring_date")
     private String monitoringDate;
-
 
     /**
      * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
@@ -380,5 +354,4 @@ public class Mall {
     private static Integer safeInteger(Integer value) {
         return value != null ? value : 0;
     }
-
 }

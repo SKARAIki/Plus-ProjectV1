@@ -18,27 +18,26 @@ public class MallController {
         this.mallService = mallService;
     }
 
-    @PostMapping("/collection-openapi/{start}/{end}")
-    public ResponseEntity<MallCreateResponse> createMalls(@PathVariable int start, @PathVariable int end) {
+    // keyword가 있을경우 필터링된 데이터만 저장, 없으면 전체저장
+    @GetMapping("/collection-openapi")
+    public ResponseEntity<MallCreateResponse> fetchAndSaveMalls(@RequestParam int start, @RequestParam int end, @RequestParam (required = false) String keyword) {
         // 서울시 OpenAPI 직접 호출 -> dto로 변환(리스트형태로)
-        List<MallOpenApiDto> mallDtos = mallService.fetchAndParseOpenApiData(start, end);
-        // db에 "세고" 저장
-        int savedCount = mallService.saveAllMalls(mallDtos);
+        List<MallOpenApiDto> allMallOpenapiDto = mallService.fetchAndParseOpenApiData(start, end);
+        List<MallOpenApiDto> filteredDtos = mallService.filterByKeyword(allMallOpenapiDto, keyword);
+        int savedCount = mallService.saveAllMalls(filteredDtos);
         // 응답
-        MallCreateResponse response = new MallCreateResponse(
-                200,
-                "서울시 OpenAPI에서 " + savedCount + "개 데이터 수집 완료되었습니다"
-        );
+        // keyword가 있을경우, 없을경우 전체저장 메세지 분리
+        String message;
+        if (keyword != null && !keyword.isBlank()) {
+            message = String.format(
+                    "서울시 OpenAPI에서 총 %d개의 데이터를 수집했고, 이 중 ‘%s’ 키워드가 포함된 %d개를 저장했습니다.",
+                    allMallOpenapiDto.size(), keyword, savedCount
+            );
+        } else {
+            message = String.format("서울시 OpenAPI에서 %d개의 데이터를 저장했습니다.", savedCount);
+        }
 
+        MallCreateResponse response = new MallCreateResponse(200,message);
         return ResponseEntity.ok(response);
     }
 }
-// mall 데이터 (세고)저장
-//    @PostMapping("/collection-openapi")
-//    public ResponseEntity<MallCreateResponse> createMalls() {
-//        List<MallOpenApiDto> mallOpenApiDto = mallService.fetchAndParseOpenApiData(); // 직접 OpenAPI 요청
-//        int savedCount = mallService.saveAllMalls(mallOpenApiDto);
-//
-//        MallCreateResponse response = new MallCreateResponse(200, "OpenAPI에서 " + savedCount + "개의 데이터 수집 완료되었습니다");
-//        return ResponseEntity.ok(response);
-//    }

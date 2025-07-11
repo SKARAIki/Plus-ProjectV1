@@ -15,4 +15,3 @@ public class MallOpenApiWrapper {
         this.serviceInternetShopInfo = serviceInternetShopInfo;
     }
 }
-// setter가 필요한 이유) 라이브러리를 통해 데이터를 주입할때는 필요함

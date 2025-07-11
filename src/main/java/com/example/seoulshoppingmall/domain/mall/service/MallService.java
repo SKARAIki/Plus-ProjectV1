@@ -4,45 +4,77 @@ import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiWrapper;
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
 import com.example.seoulshoppingmall.domain.mall.repository.MallRepository;
+import org.springframework.beans.factory.annotation.Value;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class MallService {
-
-    // 의존성 주입
     private final MallRepository mallRepository;
 
-    // 생성자
+    @Value("${seoul.api.base-url}")
+    private String baseUrl;
+
+    @Value("${seoul.api.auth-key}")
+    private String authKey;
+
+    @Value("${seoul.api.format}")
+    private String format;
+
+    @Value("${seoul.api.service}")
+    private String service;
+
     public MallService(MallRepository mallRepository) {
         this.mallRepository = mallRepository;
     }
 
     // OpenAPI 호출, DTO 파싱
     public List<MallOpenApiDto> fetchAndParseOpenApiData(int start, int end) {
-        // 인증키 =
-        String url = "http://openapi.seoul.go.kr:8088/(인증키)/json/ServiceInternetShopInfo/" + start + "/" + end + "/";
-        // 기존 서울시 openapi http://openAPI.seoul.go.kr:8088/(인증키)/xml/ServiceInternetShopInfo/1/5/
-        // keyword 값 넣어서 기능 더 만들어보기
+        String url = String.format("%s/%s/%s/%s/%d/%d/", baseUrl, authKey, format, service, start, end);
 
-        // RestTemplate - 외부 API를 요청할 때 사용하는 스프링툴(방선희 튜터님 피드백 참고)
+        // RestTemplate - 외부 API를 요청할 때 사용하는 스프링툴
         RestTemplate restTemplate = new RestTemplate();
         // 결과를 객체로 파싱함
         ResponseEntity<MallOpenApiWrapper> response = restTemplate.getForEntity(url, MallOpenApiWrapper.class);
 
         // row만 꺼내서 반환
-        //디버깅 이용하기 (홍태호 튜터님)
         return response.getBody()
                 .getServiceInternetShopInfo()
                 .getRow();
     }
 
-    public int saveAllMalls(List<MallOpenApiDto> mallDtos) {
+    // 키워드 기반 필터링
+    public List<MallOpenApiDto> filterByKeyword(List<MallOpenApiDto> mallOpenapiDto, String keyword) {
+
+        // keyword가 없거나 빈 문자열일 경우("") 필터링 안하고 전체 반환
+        if (keyword == null || keyword.isBlank()) return mallOpenapiDto;
+
+        // 필터링된거 반환
+        return mallOpenapiDto.stream()
+                // 조건
+                .filter(dto -> {
+                    // mainProducts가 null이면 필터 대상에서 제외하고
+                    if (dto.getMainProducts() == null) return false;
+
+                    // 화장품/향수 같은 슬래쉬로 구분된 경우에 개별로 나눔
+                    String[] parts = dto.getMainProducts().split("/");
+
+                    // 각 품목을 trim 으로 공백제거
+                    return Arrays.stream(parts)
+                            .map(String::trim)
+                            .anyMatch(p -> p.contains(keyword.trim()));
+                })
+                .toList();
+    }
+
+    @Transactional
+    public int saveAllMalls(List<MallOpenApiDto> mallOpenapiDto) {
         // dto리스트를 엔티티리스트로 변환
-        List<Mall> malls = mallDtos.stream()
+        List<Mall> malls = mallOpenapiDto.stream()
                 .map(Mall::fromDto) // DTO → Entity
                 .toList();
 
@@ -52,38 +84,3 @@ public class MallService {
         return malls.size();
     }
 }
-    /*
-        try {
-            //json문자열을 java객체로 바꿔줌
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            // JSON 구조에서 row만 추출, 왜냐면 row 기준으로 한 단락?이 결정되기 때문, 넘버링이 되어있지 않음
-            String rowsJson = objectMapper.readTree(response.getBody())
-                    .path("ServiceInternetShopInfo")
-                    .path("row")
-                    .toString();
-            // 추출한 row를 dto리스트로 변환
-            return objectMapper.readValue(rowsJson, new TypeReference<List<MallOpenApiDto>>() {
-
-            });
-
-        } catch (Exception e) {
-            // 예외처리
-            throw new RuntimeException("JSON 파싱 실패", e);
-        }
-    }
-
-     // 위에서 파싱된 DTO 리스트를 Entity 변환 후 db에 저장
-    public int saveAllMalls(List<MallOpenApiDto> mallDtos) {
-        // dto를 entity로 반환(entity에 정적메서드)
-        List<Mall> malls = mallDtos.stream()
-                // 엔티티 안에 static 메서드로 변환
-                .map(Mall::fromDto)
-                .toList();
-
-        mallRepository.saveAll(malls);
-        // 개수반환
-        return malls.size();
-    }
-
-     */
