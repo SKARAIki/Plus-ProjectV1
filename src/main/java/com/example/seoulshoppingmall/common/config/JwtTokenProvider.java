@@ -11,6 +11,7 @@ import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -18,14 +19,19 @@ public class JwtTokenProvider {
     //속성
     private String secret;
     private final SecretKey key;
+    private Long expirationMillis;
+
 
     // JWT 앞에 붙는 접두사
     public static final String BEARER_PREFIX = "Bearer ";
 
     //생성자
-    public JwtTokenProvider(@Value("${jwt.secret}") String secret) {
+    public JwtTokenProvider(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.expiration}") Long expirationMillis) {
         this.secret = secret;
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
+        this.expirationMillis = expirationMillis;
     }
     /**
      * 토큰 만들기
@@ -37,14 +43,14 @@ public class JwtTokenProvider {
         // 2. 데이터 준비
         String subject = member.getId().toString(); // 사용자 준비
         Date now = new Date();                // 현재시간
-        Date expiration = new Date(now.getTime() + 1000 * 60 * 60); // 만료시간 설정 1분뒤
+        Date expiration = new Date(now.getTime() + expirationMillis); // 만료시간 환경변수로 관리
 
         // 2. 토큰 만들기
         String jwt = Jwts.builder()
                 .subject(subject)
                 .issuedAt(now)
-                .claim("email", "sparta@xxxx.com") // 💡 커스텀 하게 활용하는 방법
-                .claim("memberName", "lee")
+                .claim("email", member.getEmail()) // 💡 커스텀 하게 활용하는 방법
+                .claim("memberName", member.getMemberName())
                 .expiration(expiration)
                 .signWith(key)
                 .compact();
@@ -54,24 +60,28 @@ public class JwtTokenProvider {
     /**
      * 헤더에서 "Bearer <토큰>" 형식에서 토큰만 추출
      */
-    public String extractToken(String header) {
+    public Optional<String> extractToken(String header) {
         if (header != null && header.startsWith(BEARER_PREFIX)) {
-            return header.substring(BEARER_PREFIX.length()); // "Bearer " 제거
+            return Optional.of(header.substring(BEARER_PREFIX.length()));
         }
-        return null;
+        return Optional.empty();
     }
 
+    /**
+     *token에서 멤버 정보 파싱
+     */
+    public Claims parseClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
     /**
      * 토큰에서 사용자 아이디(id)를 추출
      */
     public long extractId(String token) {
-//        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
-        Claims claims = Jwts.parser()
-                .setSigningKey(key) //비밀키 설정
-                .build() //파서 빌더 빌드
-                .parseClaimsJws(token) //토큰 파싱 및 검증
-                .getBody(); //파싱 결과에서 실제 내용Body
-
+         Claims claims = parseClaims(token);
         return Long.parseLong(claims.getSubject());
     }
 
@@ -79,14 +89,8 @@ public class JwtTokenProvider {
      * 토큰에서 사용자 이름(MemberName)을 추출
      */
     public String extractMemberName(String token) {
-//        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
-        Claims claims = Jwts.parser()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.getSubject(); // setSubject로 저장했던 값 꺼냄
+        Claims claims = parseClaims(token);
+        return claims.get("memberName", String.class); //  저장했던 값 꺼냄
     }
 
     /**
@@ -94,12 +98,7 @@ public class JwtTokenProvider {
      */
     public String extractEmail(String token) {
 //        SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
-        Claims claims = Jwts.parser()
-                .verifyWith(key)
-                .build()
-                .parseSignedClaims(token)
-                .getBody();
-
+        Claims claims = parseClaims(token);
         return claims.get("email", String.class);
     }
 

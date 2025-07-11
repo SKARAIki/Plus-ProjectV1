@@ -1,12 +1,14 @@
 package com.example.seoulshoppingmall.common.filter;
 
 import com.example.seoulshoppingmall.common.config.JwtTokenProvider;
+import com.example.seoulshoppingmall.domain.auth.repository.MemberRepository;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -37,19 +39,21 @@ public class LoginJwtFilter implements Filter {
 
         String auth = req.getHeader("Authorization");
 
-        //회원가입, 로그인 요청은 통과
-        if (uri.equals("/api/members") || uri.equals("/api/members/login")) {
+        //회원가입, 로그인 요청은 통과 (Set에 저장된 값들을 내부적으로 순회하면서 입력된 uri와 같은 게 있는지 비교해서 확인)
+        if (WHITELIST.contains(uri)) {
             chain.doFilter(request, response);
             return;
         }
 
         // JWT 추출
-        String authHeader = req.getHeader("Authorization");
-        String token = jwtTokenProvider.extractToken(authHeader);
-        if (token == null) {
+        Optional<String> optionalToken = jwtTokenProvider.extractToken(auth);
+        //토큰이 null이면 다음줄 에러 처리
+        if (optionalToken.isEmpty()) {
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT 토큰이 필요합니다.");
             return;
         }
+        //null이 아니면 토큰 꺼내기
+        String token = optionalToken.get();
 
         // JWT 검증
         if (!jwtTokenProvider.validateToken(token)) {

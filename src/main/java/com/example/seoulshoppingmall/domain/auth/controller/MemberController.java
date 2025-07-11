@@ -3,9 +3,8 @@ package com.example.seoulshoppingmall.domain.auth.controller;
 import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import com.example.seoulshoppingmall.domain.auth.dto.request.LoginRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.request.MemberCreateRequest;
-import com.example.seoulshoppingmall.domain.auth.dto.response.LoginResponse;
 import com.example.seoulshoppingmall.domain.auth.dto.response.MemberCreateResponse;
-import com.example.seoulshoppingmall.domain.auth.dto.response.TokenResponse;
+import com.example.seoulshoppingmall.domain.auth.dto.response.LoginTokenResponse;
 import com.example.seoulshoppingmall.domain.auth.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,11 +41,10 @@ public class MemberController {
      * 로그인 API
      */
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<TokenResponse>> loginAPI(@RequestBody LoginRequest request) {
-        LoginResponse loginResponse = memberService.login(request);
-        TokenResponse tokenResponse = loginResponse.getData();
-        ResponseEntity<ApiResponse<TokenResponse>> response = ResponseEntity.ok(
-                ApiResponse.success(HttpStatus.OK, "로그인 성공", tokenResponse)
+    public ResponseEntity<ApiResponse<LoginTokenResponse>> loginAPI(@RequestBody LoginRequest request) {
+        LoginTokenResponse loginResponse = memberService.login(request);
+        ResponseEntity<ApiResponse<LoginTokenResponse>> response = ResponseEntity.ok(
+                ApiResponse.success(HttpStatus.OK, "로그인 성공", loginResponse)
         );
         return response;
     }

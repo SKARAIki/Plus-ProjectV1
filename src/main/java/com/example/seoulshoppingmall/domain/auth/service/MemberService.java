@@ -4,11 +4,12 @@ import com.example.seoulshoppingmall.common.config.JwtTokenProvider;
 import com.example.seoulshoppingmall.common.config.PasswordEncoder;
 import com.example.seoulshoppingmall.domain.auth.dto.request.LoginRequest;
 import com.example.seoulshoppingmall.domain.auth.dto.request.MemberCreateRequest;
-import com.example.seoulshoppingmall.domain.auth.dto.response.LoginResponse;
 import com.example.seoulshoppingmall.domain.auth.dto.response.MemberCreateResponse;
-import com.example.seoulshoppingmall.domain.auth.dto.response.TokenResponse;
+import com.example.seoulshoppingmall.domain.auth.dto.response.LoginTokenResponse;
 import com.example.seoulshoppingmall.domain.auth.entity.Member;
 import com.example.seoulshoppingmall.domain.auth.repository.MemberRepository;
+import jakarta.transaction.Transactional;
+import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,6 +30,7 @@ public class MemberService {
     /**
      * 회원 가입 서비스
      */
+    @Transactional
     public MemberCreateResponse createMember(MemberCreateRequest requestDto) {
         //1.데이터준비
         String email = requestDto.getEmail();
@@ -61,7 +63,8 @@ public class MemberService {
     /**
      * 로그인 서비스
      */
-    public LoginResponse login(LoginRequest requestDto) {
+    @Transactional
+    public LoginTokenResponse login(LoginRequest requestDto) {
         //1.데이터 준비
         String userEmail = requestDto.getEmail();
         String password = requestDto.getPassword();
@@ -75,7 +78,7 @@ public class MemberService {
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
         String token = jwtTokenProvider.createToken(loginMember);
-        TokenResponse tokenResponse = new TokenResponse(token);
-        return new LoginResponse(200, "created", tokenResponse);
+        LoginTokenResponse tokenResponse = new LoginTokenResponse(token);
+        return tokenResponse;
     }
 }
