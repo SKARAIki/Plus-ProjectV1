@@ -4,10 +4,12 @@ import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
 import com.example.seoulshoppingmall.domain.auth.entity.Member;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
 @Entity
-@Table(name = "shopping_malls")
+@Table(name = "seoulcity_stores")
 public class Mall{
 
     /**
@@ -17,124 +19,124 @@ public class Mall{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @NotNull
-    @Column(name = "business_name")
+
+    @Column(name = "business_name", columnDefinition = "text")
     private String businessName;
 
-    @NotNull
-    @Column(name = "mall_name")
+
+    @Column(name = "mall_name", columnDefinition = "text")
     private String mallName;
 
-    @NotNull
-    @Column(name = "domain_name")
+
+    @Column(name = "domain_name", columnDefinition = "text")
     private String domainName;
 
-    @NotNull
-    @Column(name = "phone_number")
+
+    @Column(name = "phone_number", columnDefinition = "text")
     private String phoneNumber;
 
-    @NotNull
-    @Column(name = "operator_email")
+
+    @Column(name = "operator_email", columnDefinition = "text")
     private String operatorEmail;
 
-    @Column(name = "sales_number")
+    @Column(name = "sales_number", columnDefinition = "text")
     private String salesNumber;
 
-    @Column(name = "business_type")
+    @Column(name = "business_type", columnDefinition = "text")
     private String businessType;
 
-    @NotNull
-    @Column(name = "initial_report_date")
+
+    @Column(name = "initial_report_date", columnDefinition = "text")
     private String initialReportDate;
 
-    @NotNull
-    @Column(name = "company_address", length = 512)
+
+    @Column(name = "company_address", columnDefinition = "text")
     private String companyAddress;
 
-    @NotNull
-    @Column(name = "business_status")
+
+    @Column(name = "business_status", columnDefinition = "text")
     private String businessStatus;
 
-    @NotNull
-    @Column(name = "overall_rating")
+
+    @Column(name = "overall_rating", columnDefinition = "text")
     private int overallRating;
 
-    @NotNull
-    @Column(name = "business_info_rating")
+
+    @Column(name = "business_info_rating", columnDefinition = "text")
     private int businessInfoRating;
 
-    @NotNull
-    @Column(name = "cancellation_policy_rating")
+
+    @Column(name = "cancellation_policy_rating", columnDefinition = "text")
     private int cancellationPolicyRating;
 
-    @NotNull
-    @Column(name = "payment_method_rating")
+
+    @Column(name = "payment_method_rating", columnDefinition = "text")
     private int paymentMethodRating;
 
-    @NotNull
-    @Column(name = "terms_rating")
+
+    @Column(name = "terms_rating", columnDefinition = "text")
     private int termsRating;
 
-    @NotNull
-    @Column(name = "privacy_security_rating")
+
+    @Column(name = "privacy_security_rating", columnDefinition = "text")
     private int privacySecurityRating;
 
-    @Column(name = "main_products")
+    @Column(name = "main_products", columnDefinition = "text")
     private String mainProducts;
 
-    @NotNull
-    @Column(name = "cancellation_policy_available")
+
+    @Column(name = "cancellation_policy_available", columnDefinition = "text")
     private String cancellationPolicyAvailable;
 
-    @Column(name = "mandatory_display_items")
+    @Column(name = "mandatory_display_items", columnDefinition = "text")
     private String mandatoryDisplayItems;
 
-    @Column(name = "payment_methods")
+    @Column(name = "payment_methods", columnDefinition = "text")
     private String paymentMethods;
 
-    @NotNull
-    @Column(name = "terms_compliance")
+
+    @Column(name = "terms_compliance", columnDefinition = "text")
     private String termsCompliance;
 
-    @NotNull
-    @Column(name = "privacy_policy")
+
+    @Column(name = "privacy_policy", columnDefinition = "text")
     private String privacyPolicy;
 
-    @Column(name = "additional_privacy_requirements")
+    @Column(name = "additional_privacy_requirements", columnDefinition = "text")
     private String additionalPrivacyRequirements;
 
-    @NotNull
-    @Column(name = "purchase_safety_service")
+
+    @Column(name = "purchase_safety_service", columnDefinition = "text")
     private String purchaseSafetyService;
 
-    @Column(name = "secure_server_installation")
+    @Column(name = "secure_server_installation", columnDefinition = "text")
     private String secureServerInstallation;
 
-    @Column(name = "certification_mark")
+    @Column(name = "certification_mark", columnDefinition = "text")
     private String certificationMark;
 
-    @NotNull
-    @Column(name = "delivery_date_display")
+
+    @Column(name = "delivery_date_display", columnDefinition = "text")
     private String deliveryDateDisplay;
 
-    @NotNull
-    @Column(name = "return_shipping_cost_responsibility")
+
+    @Column(name = "return_shipping_cost_responsibility", columnDefinition = "text")
     private String returnShippingCostResponsibility;
 
-    @NotNull
-    @Column(name = "customer_complaint_board")
+
+    @Column(name = "customer_complaint_board", columnDefinition = "text")
     private String customerComplaintBoard;
 
-    @NotNull
-    @Column(name = "member_withdrawal_method")
+
+    @Column(name = "member_withdrawal_method", columnDefinition = "text")
     private String memberWithdrawalMethod;
 
-    @NotNull
-    @Column(name = "site_opening_year")
+
+    @Column(name = "site_opening_year", columnDefinition = "text")
     private String siteOpeningYear;
 
-    @NotNull
-    @Column(name = "monitoring_date")
+
+    @Column(name = "monitoring_date", columnDefinition = "text")
     private String monitoringDate;
 
 
@@ -144,7 +146,7 @@ public class Mall{
     protected Mall() {
     }
 
-    public Mall(Long id, String businessName, String mallName, String domainName, String phoneNumber, String operatorEmail,
+    public Mall(String businessName, String mallName, String domainName, String phoneNumber, String operatorEmail,
                 String salesNumber, String businessType, String initialReportDate, String companyAddress, String businessStatus,
                 Integer overallRating, Integer businessInfoRating, Integer cancellationPolicyRating, Integer paymentMethodRating,
                 Integer termsRating, Integer privacySecurityRating, String mainProducts, String cancellationPolicyAvailable,
@@ -153,7 +155,6 @@ public class Mall{
                 String certificationMark, String deliveryDateDisplay, String returnShippingCostResponsibility,
                 String customerComplaintBoard, String memberWithdrawalMethod, String siteOpeningYear, String monitoringDate
     ) {
-        this.Id = id;
         this.businessName = businessName;
         this.mallName = mallName;
         this.domainName = domainName;
@@ -201,135 +202,5 @@ public class Mall{
     /**
      * 서비스 메소드 - 외부에서 엔티티를 수정할 메소드를 정의합니다. (단일 책임을 가지도록 주의합니다.)
      */
-    public Long getId() {
-        return Id;
-    }
 
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public String getMallName() {
-        return mallName;
-    }
-
-    public String getDomainName() {
-        return domainName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getOperatorEmail() {
-        return operatorEmail;
-    }
-
-    public String getSalesNumber() {
-        return salesNumber;
-    }
-
-    public String getBusinessType() {
-        return businessType;
-    }
-
-    public String getInitialReportDate() {
-        return initialReportDate;
-    }
-
-    public String getCompanyAddress() {
-        return companyAddress;
-    }
-
-    public String getBusinessStatus() {
-        return businessStatus;
-    }
-
-    public Integer getOverallRating() {
-        return overallRating;
-    }
-
-    public Integer getBusinessInfoRating() {
-        return businessInfoRating;
-    }
-
-    public Integer getCancellationPolicyRating() {
-        return cancellationPolicyRating;
-    }
-
-    public Integer getPaymentMethodRating() {
-        return paymentMethodRating;
-    }
-
-    public Integer getTermsRating() {
-        return termsRating;
-    }
-
-    public Integer getPrivacySecurityRating() {
-        return privacySecurityRating;
-    }
-
-    public String getMainProducts() {
-        return mainProducts;
-    }
-
-    public String getCancellationPolicyAvailable() {
-        return cancellationPolicyAvailable;
-    }
-
-    public String getMandatoryDisplayItems() {
-        return mandatoryDisplayItems;
-    }
-
-    public String getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public String getTermsCompliance() {
-        return termsCompliance;
-    }
-
-    public String getPrivacyPolicy() {
-        return privacyPolicy;
-    }
-
-    public String getAdditionalPrivacyRequirements() {
-        return additionalPrivacyRequirements;
-    }
-
-    public String getPurchaseSafetyService() {
-        return purchaseSafetyService;
-    }
-
-    public String getSecureServerInstallation() {
-        return secureServerInstallation;
-    }
-
-    public String getCertificationMark() {
-        return certificationMark;
-    }
-
-    public String getDeliveryDateDisplay() {
-        return deliveryDateDisplay;
-    }
-
-    public String getReturnShippingCostResponsibility() {
-        return returnShippingCostResponsibility;
-    }
-
-    public String getCustomerComplaintBoard() {
-        return customerComplaintBoard;
-    }
-
-    public String getMemberWithdrawalMethod() {
-        return memberWithdrawalMethod;
-    }
-
-    public String getSiteOpeningYear() {
-        return siteOpeningYear;
-    }
-
-    public String getMonitoringDate() {
-        return monitoringDate;
-    }
 }
