@@ -1,4 +1,4 @@
-package com.example.trendsixtown.common.exception;
+package com.example.seoulshoppingmall.domain.auth.Exception;
 
 public class fileException extends RuntimeException {
 

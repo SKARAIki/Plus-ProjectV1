@@ -1,6 +1,6 @@
-package com.example.trendsixtown.domain.repository;
+package com.example.seoulshoppingmall.domain.mall.repository;
 
-import com.example.trendsixtown.domain.entity.ShoppingMall;
+import com.example.seoulshoppingmall.domain.mall.entity.ShoppingMall;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package com.example.trendsixtown.domain.Controller;
+package com.example.seoulshoppingmall.domain.mall.controller;
 
-import com.example.trendsixtown.common.dto.ApiResponse;
-import com.example.trendsixtown.domain.service.ShoppingMallCsvService;
+import com.example.seoulshoppingmall.common.dto.ApiResponse;
+import com.example.seoulshoppingmall.domain.mall.service.ShoppingMallCsvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,7 @@
-package com.example.trendsixtown.domain.entity;
+package com.example.seoulshoppingmall.domain.mall.entity;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

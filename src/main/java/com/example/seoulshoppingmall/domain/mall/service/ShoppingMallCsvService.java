@@ -1,11 +1,9 @@
-package com.example.trendsixtown.domain.service;
+package com.example.seoulshoppingmall.domain.mall.service;
 
-import com.example.trendsixtown.common.exception.fileException;
-import com.example.trendsixtown.domain.entity.ShoppingMall;
-import com.example.trendsixtown.domain.repository.ShoppingMallCsvRepository;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.example.seoulshoppingmall.domain.auth.Exception.fileException;
+import com.example.seoulshoppingmall.domain.mall.entity.ShoppingMall;
+import com.example.seoulshoppingmall.domain.mall.repository.ShoppingMallCsvRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.result.UpdateCountOutput;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

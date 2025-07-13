@@ -1,4 +1,4 @@
-package com.example.trendsixtown.domain.Dto;
+package com.example.seoulshoppingmall.domain.mall.dto.mallapi;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
