@@ -5,6 +5,7 @@ import com.example.seoulshoppingmall.csv.csvBean.MallInfoCsv;
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
 import com.example.seoulshoppingmall.domain.mall.repository.MallRepository;
 import com.opencsv.bean.CsvToBeanBuilder;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,11 @@ import java.util.stream.Collectors;
 @Service
 public class CsvService {
     private final MallRepository mallRepository;
+    private final EntityManager entityManager;
 
-    public CsvService(MallRepository mallRepository) {
+    public CsvService(MallRepository mallRepository, EntityManager entityManager) {
         this.mallRepository = mallRepository;
+        this.entityManager = entityManager;
     }
 
     @Transactional
@@ -64,7 +67,14 @@ public class CsvService {
                     .map(mallInfoCsv -> mallInfoCsv.toEntity())
                     .collect(Collectors.toList());
 
-            mallRepository.saveAll(mallInfoList);
+            int chunkSize = 100;
+            for (int i = 0; i < mallInfoList.size(); i += chunkSize ) {
+                int end = Math.min(i + mallInfoList.size(), mallInfoList.size());
+                List<Mall> mallSaveList = mallInfoList.subList(i, end);
+                mallRepository.saveAll(mallSaveList);
+                entityManager.flush();
+                entityManager.clear();
+            }
 
             ApiResponse<Object> success
                     = ApiResponse.success(HttpStatus.CREATED, "CSV파일이 DB에 업로드 되었습니다", "");

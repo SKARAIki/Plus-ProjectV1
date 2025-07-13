@@ -8,16 +8,24 @@ import lombok.Setter;
 
 @Getter
 @Entity
-@Table(name = "shopping_malls")
+@Table(name = "seoulcity_stores")
+@TableGenerator(
+        name = "mall_table_gen",
+        table = "hibernate_sequences",
+        pkColumnName = "sequence_name",
+        valueColumnName = "next_val",
+        pkColumnValue = "seoulcity_stores",
+        initialValue = 1,
+        allocationSize = 100
+    )
 public class Mall {
 
     /**
      * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "mall_seq")
     private Long Id;
-
 
     @Column(name = "business_name", columnDefinition = "text")
     private String businessName;
@@ -122,7 +130,7 @@ public class Mall {
     protected Mall() {
     }
 
-    public Mall(Long id, String businessName, String mallName, String domainName, String phoneNumber, String operatorEmail,
+    public Mall(String businessName, String mallName, String domainName, String phoneNumber, String operatorEmail,
                 String salesNumber, String businessType, String initialReportDate, String companyAddress, String businessStatus,
                 Integer overallRating, Integer businessInfoRating, Integer cancellationPolicyRating, Integer paymentMethodRating,
                 Integer termsRating, Integer privacySecurityRating, String mainProducts, String cancellationPolicyAvailable,
@@ -131,7 +139,6 @@ public class Mall {
                 String certificationMark, String deliveryDateDisplay, String returnShippingCostResponsibility,
                 String customerComplaintBoard, String memberWithdrawalMethod, String siteOpeningYear, String monitoringDate
     ) {
-        this.Id = id;
         this.businessName = businessName;
         this.mallName = mallName;
         this.domainName = domainName;
@@ -179,142 +186,11 @@ public class Mall {
     /**
      * 서비스 메소드 - 외부에서 엔티티를 수정할 메소드를 정의합니다. (단일 책임을 가지도록 주의합니다.)
      */
-    public Long getId() {
-        return Id;
-    }
 
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public String getMallName() {
-        return mallName;
-    }
-
-    public String getDomainName() {
-        return domainName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getOperatorEmail() {
-        return operatorEmail;
-    }
-
-    public String getSalesNumber() {
-        return salesNumber;
-    }
-
-    public String getBusinessType() {
-        return businessType;
-    }
-
-    public String getInitialReportDate() {
-        return initialReportDate;
-    }
-
-    public String getCompanyAddress() {
-        return companyAddress;
-    }
-
-    public String getBusinessStatus() {
-        return businessStatus;
-    }
-
-    public Integer getOverallRating() {
-        return overallRating;
-    }
-
-    public Integer getBusinessInfoRating() {
-        return businessInfoRating;
-    }
-
-    public Integer getCancellationPolicyRating() {
-        return cancellationPolicyRating;
-    }
-
-    public Integer getPaymentMethodRating() {
-        return paymentMethodRating;
-    }
-
-    public Integer getTermsRating() {
-        return termsRating;
-    }
-
-    public int getPrivacySecurityRating() {
-        return privacySecurityRating;
-    }
-
-    public String getMainProducts() {
-        return mainProducts;
-    }
-
-    public String getCancellationPolicyAvailable() {
-        return cancellationPolicyAvailable;
-    }
-
-    public String getMandatoryDisplayItems() {
-        return mandatoryDisplayItems;
-    }
-
-    public String getPaymentMethods() {
-        return paymentMethods;
-    }
-
-    public String getTermsCompliance() {
-        return termsCompliance;
-    }
-
-    public String getPrivacyPolicy() {
-        return privacyPolicy;
-    }
-
-    public String getAdditionalPrivacyRequirements() {
-        return additionalPrivacyRequirements;
-    }
-
-    public String getPurchaseSafetyService() {
-        return purchaseSafetyService;
-    }
-
-    public String getSecureServerInstallation() {
-        return secureServerInstallation;
-    }
-
-    public String getCertificationMark() {
-        return certificationMark;
-    }
-
-    public String getDeliveryDateDisplay() {
-        return deliveryDateDisplay;
-    }
-
-    public String getReturnShippingCostResponsibility() {
-        return returnShippingCostResponsibility;
-    }
-
-    public String getCustomerComplaintBoard() {
-        return customerComplaintBoard;
-    }
-
-    public String getMemberWithdrawalMethod() {
-        return memberWithdrawalMethod;
-    }
-
-    public String getSiteOpeningYear() {
-        return siteOpeningYear;
-    }
-
-    public String getMonitoringDate() {
-        return monitoringDate;
-    }
 
     // MallService에서 쓰는 정적 메서드
     public static Mall fromDto(MallOpenApiDto dto) {
         return new Mall(
-                null,
                 safeString(dto.getBusinessName()),
                 safeString(dto.getMallName()),
                 safeString(dto.getDomainName()),
