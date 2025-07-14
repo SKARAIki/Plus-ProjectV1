@@ -18,8 +18,8 @@ public class CsvController {
     }
 
     @PostMapping("/collection")
-    public ApiResponse<Object> CsvReadApi(@ModelAttribute MultipartFile csvFile) {
-        ApiResponse<Object> fileUploadSuccess = csvService.csvFileUploadProcess(csvFile);
+    public ApiResponse<String> CsvReadApi(@ModelAttribute MultipartFile csvFile) {
+        ApiResponse<String> fileUploadSuccess = csvService.csvFileUploadProcess(csvFile);
         return fileUploadSuccess;
 
     }

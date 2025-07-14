@@ -10,4 +10,5 @@ public interface MallRepositoryCustom {
     List<Mall> searchMalls(
             String cursorDate, Long cursorId, int size, Integer overallRating, String businessStatus
     );
+    void bulkSave(List<Mall> malls);
 }
