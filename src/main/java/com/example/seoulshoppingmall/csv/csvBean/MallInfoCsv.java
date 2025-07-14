@@ -8,100 +8,100 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MallInfoCsv {
-    @CsvBindByName(column = "business_name")
+    @CsvBindByName(column = "상호")
     private String businessName;
 
-    @CsvBindByName(column = "mall_name")
+    @CsvBindByName(column = "쇼핑몰명")
     private String mallName;
 
-    @CsvBindByName(column = "domain_name")
+    @CsvBindByName(column = "도메인명")
     private String domainName;
 
-    @CsvBindByName(column = "phone_number")
+    @CsvBindByName(column = "전화번호")
     private String phoneNumber;
 
-    @CsvBindByName(column = "operator_email")
+    @CsvBindByName(column = "운영자이메일")
     private String operatorEmail;
 
-    @CsvBindByName(column = "sales_number")
+    @CsvBindByName(column = "통신판매번호")
     private String salesNumber;
 
-    @CsvBindByName(column = "business_type")
+    @CsvBindByName(column = "영업형태")
     private String businessType;
 
-    @CsvBindByName(column = "initial_report_date")
+    @CsvBindByName(column = "최초신고일자")
     private String initialReportDate;
 
-    @CsvBindByName(column = "company_address")
+    @CsvBindByName(column = "회사주소")
     private String companyAddress;
 
-    @CsvBindByName(column = "business_status")
+    @CsvBindByName(column = "업소상태")
     private String businessStatus;
 
-    @CsvBindByName(column = "overall_rating")
+    @CsvBindByName(column = "전체평가")
     private int overallRating;
 
-    @CsvBindByName(column = "business_info_rating")
+    @CsvBindByName(column = "사업자정보표시평가")
     private int businessInfoRating;
 
-    @CsvBindByName(column = "cancellation_policy_rating")
+    @CsvBindByName(column = "청약철회평가")
     private int cancellationPolicyRating;
 
-    @CsvBindByName(column = "payment_method_rating")
+    @CsvBindByName(column = "결재방법평가")
     private int paymentMethodRating;
 
-    @CsvBindByName(column = "terms_rating")
+    @CsvBindByName(column = "이용약관평가")
     private int termsRating;
 
-    @CsvBindByName(column = "privacy_security_rating")
+    @CsvBindByName(column = "개인정보보안평가")
     private int privacySecurityRating;
 
-    @CsvBindByName(column = "main_products")
+    @CsvBindByName(column = "주요취급품목")
     private String mainProducts;
 
-    @CsvBindByName(column = "cancellation_policy_available")
+    @CsvBindByName(column = "청약철회가능여부")
     private String cancellationPolicyAvailable;
 
-    @CsvBindByName(column = "mandatory_display_items")
+    @CsvBindByName(column = "초기화면필수항목중표시사항")
     private String mandatoryDisplayItems;
 
-    @CsvBindByName(column = "payment_methods")
+    @CsvBindByName(column = "결제방법")
     private String paymentMethods;
 
-    @CsvBindByName(column = "terms_compliance")
+    @CsvBindByName(column = "이용약관준수정도")
     private String termsCompliance;
 
-    @CsvBindByName(column = "privacy_policy")
+    @CsvBindByName(column = "개인정보취급방침")
     private String privacyPolicy;
 
-    @CsvBindByName(column = "additional_privacy_requirements")
+    @CsvBindByName(column = "표준약관이상개인정보항목요구")
     private String additionalPrivacyRequirements;
 
-    @CsvBindByName(column = "purchase_safety_service")
+    @CsvBindByName(column = "구매안전서비스")
     private String purchaseSafetyService;
 
-    @CsvBindByName(column = "secure_server_installation")
+    @CsvBindByName(column = "보안서버설치")
     private String secureServerInstallation;
 
-    @CsvBindByName(column = "certification_mark")
+    @CsvBindByName(column = "인증마크")
     private String certificationMark;
 
-    @CsvBindByName(column = "delivery_date_display")
+    @CsvBindByName(column = "배송예정일표시")
     private String deliveryDateDisplay;
 
-    @CsvBindByName(column = "return_shipping_cost_responsibility")
+    @CsvBindByName(column = "철회시배송비부담여부")
     private String returnShippingCostResponsibility;
 
-    @CsvBindByName(column = "customer_complaint_board")
+    @CsvBindByName(column = "고객불만게시판운영")
     private String customerComplaintBoard;
 
-    @CsvBindByName(column = "member_withdrawal_method")
+    @CsvBindByName(column = "회원탈퇴방법")
     private String memberWithdrawalMethod;
 
-    @CsvBindByName(column = "site_opening_year")
+    @CsvBindByName(column = "사이트개설년도")
     private String siteOpeningYear;
 
-    @CsvBindByName(column = "monitoring_date")
+    @CsvBindByName(column = "모니터링날짜")
     private String monitoringDate;
 
 

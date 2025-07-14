@@ -2,29 +2,19 @@ package com.example.seoulshoppingmall.domain.mall.entity;
 
 import com.example.seoulshoppingmall.domain.mall.dto.openapi.MallOpenApiDto;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.Setter;
+
 
 @Getter
 @Entity
-@Table(name = "seoulcity_stores")
-@TableGenerator(
-        name = "mall_table_gen",
-        table = "hibernate_sequences",
-        pkColumnName = "sequence_name",
-        valueColumnName = "next_val",
-        pkColumnValue = "seoulcity_stores",
-        initialValue = 1,
-        allocationSize = 100
-    )
+@Table(name = "seoul_city_stores")
 public class Mall {
 
     /**
      * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "mall_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     @Column(name = "business_name", columnDefinition = "text")
