@@ -83,8 +83,8 @@ public class GlobalExceptionHandler {
     }
 
     //파일 없음 에러
-    @ExceptionHandler(fileException.class)
-    public ResponseEntity<ErrorResponse> FileExceptionHandle(fileException ex) {
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<ErrorResponse> fileExceptionHandle(FileException ex) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage());

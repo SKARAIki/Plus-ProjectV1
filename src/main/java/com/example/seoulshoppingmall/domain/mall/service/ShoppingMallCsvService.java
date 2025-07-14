@@ -1,6 +1,6 @@
 package com.example.seoulshoppingmall.domain.mall.service;
 
-import com.example.seoulshoppingmall.domain.auth.Exception.fileException;
+import com.example.seoulshoppingmall.domain.auth.Exception.FileException;
 import com.example.seoulshoppingmall.domain.mall.entity.ShoppingMall;
 import com.example.seoulshoppingmall.domain.mall.repository.ShoppingMallCsvRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,19 +23,21 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class ShoppingMallCsvService {
 
     private final ShoppingMallCsvRepository shoppingMallCsvRepository;
-    //데이터를 담을 수 있는 최대 사이즈 선언
+    //데이터를 담을 수 있는 최대 사이즈 선언(CSV 줄 수)\
+    //하나의  쓰레드가 처리할 CSV 데이터 줄 수 설정
     private static final int CHUNK_SIZE  = 2000;
     private static final int THREAD_COUNT = 4;
 
 
+    @Transactional
     public String uploadCsv(MultipartFile file) throws IOException {
         ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
         List<Future<?>> futures = new ArrayList<>();
 
+        //읽은 CSV 리스트에 저장
         List<String> allLines;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
@@ -47,6 +49,7 @@ public class ShoppingMallCsvService {
         }
         List<List<String>> shoppingMallChunks = splitIntoChunks(allLines,CHUNK_SIZE);
 
+        //저장된 리스트데이터 엔티티 리스트로 저장 > 데이터베이스에 저장
         for(List<String> shoppingMallChunk : shoppingMallChunks){
             futures.add(executorService.submit(()->{
                 List<ShoppingMall> shoppingMallEntity = shoppingMallChunk.stream()
@@ -62,7 +65,7 @@ public class ShoppingMallCsvService {
             try {
                 future.get();
             } catch (InterruptedException | ExecutionException e){
-               throw new fileException();
+               throw new FileException();
             }
         }
 
@@ -72,6 +75,7 @@ public class ShoppingMallCsvService {
     }
 
     private List<List<String>> splitIntoChunks(List<String> liest,int chunkSize){
+        //CSV를 2000줄씩 끊어서 리스트에 저장
         List<List<String>> chunks = new ArrayList<>();
 
         for(int i = 0 ; i < liest.size() ; i += chunkSize){
