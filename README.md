@@ -34,7 +34,7 @@ TrendSixTown 프로젝트는 여섯 명이 모여 서울시 인터넷 쇼핑몰
 
 JAVA, Spring, JPA
 
-JWT, Mysql, QueryDSL, BufferedReader
+JWT, Mysql, QueryDSL, OpenCsv
 
 Github
 
@@ -140,10 +140,9 @@ public class MallCsvCustomRepositoryImpl implements MallCsvRepositoryCustom {
              Mall mall = malls.get(i);
                 ps.setString(1, mall.getBusinessName());
                 ps.setString(2, mall.getMallName());
-								             .
-								             .
-								             .
-							  ps.setString(32, mall.getMonitoringDate());
+				                .
+                                .
+                ps.setString(32, mall.getMonitoringDate());
             }
 
             @Override
