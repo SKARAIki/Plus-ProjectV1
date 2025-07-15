@@ -502,6 +502,7 @@ public List<MallOpenApiDto> filterByKeyword(List<MallOpenApiDto> mallOpenapiDto,
 
 - “화장품/향수” → “화장품”, “향수”로 분리하여 정확한 필터링 가능
 - 단일 항목 등 모든 경우 필터링 가능
+  
 ### 이형준님
 
 ### 문제1
