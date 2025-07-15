@@ -72,7 +72,9 @@ Github
 
 ### 개인 트러블 슈팅
 
-김광수님
+### 김광수님
+
+### 문제 1
 
 ### 문제 상황
 
@@ -167,9 +169,9 @@ public class MallCsvCustomRepositoryImpl implements MallCsvRepositoryCustom {
 
 해서 개발을 할 때 단순히 작동만 하면 되는 프로그램이 아닌, “내가 이 프로그램을 사용했을 때” 라는 생각으로 만들고자 노력하겠습니다.
 
-김진권님
+### 김진권님
 
-문제1
+### 문제1
 
 ### 문제 상황
 
@@ -224,9 +226,9 @@ sourceSets.main.java.srcDirs += querydslDir는 해당 디렉토리를 소스 디
 ---
 
 
-안상아님
+### 안상아님
 
-문제1
+### 문제1
 
 ### **‼️**문제 상황
 
@@ -272,7 +274,7 @@ public Optional<String> extracToken(String header) {
 
 ---
 
-문제2
+### 문제2
 
 ### **‼️**문제 상황
 
@@ -393,8 +395,9 @@ public Optional<String> extracToken(String header) {
 - 스레드 안전성 확보로 예기치 않은 에러 방지
 - 파싱 중복 제거는 구조적으로 서비스 확장 시 성능 최적화 기반이 될 수 있음(CPU 자원 효율성과 응답 시간 단축 가능성의 장점이 있음)
 
-이승은님
-문제1
+### 이승은님
+
+### 문제1
 
 ### 문제 상황
 
@@ -441,8 +444,9 @@ By 이후부터 조건 필드를 나열해야 메소드가 제대로 작동한�
 
 한층 더 신중한 개발을 할 수 있게 됐다고 생각합니다.
 
-이예진님
-문제1: mainProducts의 슬래시(/) 구분 문제로 인한 필터링
+### 이예진님
+
+### 문제1: mainProducts의 슬래시(/) 구분 문제로 인한 필터링
 
 ### 문제 상황
 
@@ -498,8 +502,9 @@ public List<MallOpenApiDto> filterByKeyword(List<MallOpenApiDto> mallOpenapiDto,
 
 - “화장품/향수” → “화장품”, “향수”로 분리하여 정확한 필터링 가능
 - 단일 항목 등 모든 경우 필터링 가능
-이형준님
-문제1
+### 이형준님
+
+### 문제1
 
 ### 문제 상황
 
