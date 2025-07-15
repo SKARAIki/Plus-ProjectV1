@@ -1,7 +1,5 @@
 package com.example.seoulshoppingmall.domain.auth.dto.response;
 
-import java.time.LocalDateTime;
-
 public class MemberCreateResponse {
     //속성
     private Long id;

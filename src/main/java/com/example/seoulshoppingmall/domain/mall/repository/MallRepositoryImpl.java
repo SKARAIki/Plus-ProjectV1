@@ -74,7 +74,7 @@ public class MallRepositoryImpl implements MallRepositoryCustom{
                         "certification_mark, delivery_date_display, return_shipping_cost_responsibility, " +
                         "customer_complaint_board, member_withdrawal_method, site_opening_year, monitoring_date" +
                         ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        // 비동기방식
+
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {

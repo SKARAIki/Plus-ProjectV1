@@ -1,17 +1,12 @@
 package com.example.seoulshoppingmall.domain.auth.entity;
 
-import com.example.seoulshoppingmall.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 @Entity
 @Table(name = "members")
-public class Member extends BaseTimeEntity {
+public class Member {
     /**
      * 컬럼 - 연관관계 컬럼을 제외한 컬럼을 정의합니다.
      */
@@ -29,15 +24,6 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, length = 50)
     private String memberName;
 
-    @CreatedDate
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    public void onCreate() {
-        LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
-        this.createdAt = now;
-    }
 
     /**
      * 생성자 - 약속된 형태로만 생성가능하도록 합니다.

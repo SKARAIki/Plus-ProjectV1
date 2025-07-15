@@ -13,7 +13,6 @@ import com.example.seoulshoppingmall.domain.auth.dto.response.LoginTokenResponse
 import com.example.seoulshoppingmall.domain.auth.entity.Member;
 import com.example.seoulshoppingmall.domain.auth.repository.MemberRepository;
 import jakarta.transaction.Transactional;
-import org.apache.coyote.Response;
 import org.springframework.stereotype.Service;
 
 @Service
