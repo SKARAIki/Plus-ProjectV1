@@ -780,7 +780,7 @@ public class ShoppingMallCsvService {
 
 ### 팀트러블 슈팅
 
-문제: Filter 체인 누락으로 인한 조회 API 응답 본문 미반환 이슈
+### 문제: Filter 체인 누락으로 인한 조회 API 응답 본문 미반환 이슈
 
 ## 문제 상황
 
