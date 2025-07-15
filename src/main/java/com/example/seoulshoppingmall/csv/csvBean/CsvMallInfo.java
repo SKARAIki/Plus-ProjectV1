@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MallInfoCsv {
+public class CsvMallInfo {
     @CsvBindByName(column = "상호")
     private String businessName;
 
@@ -108,7 +108,7 @@ public class MallInfoCsv {
     /**
      * 생성자 - 약속된 형태로만 생성가능하도록 합니다.
      */
-    public MallInfoCsv() {} // openCsv는 기본생성자를 사용해서 데이터를 저장함
+    public CsvMallInfo() {} // openCsv는 기본생성자를 사용해서 데이터를 저장함
 
     public Mall toEntity() {
         Mall mall = new Mall(this.businessName, this.mallName, this.domainName, this. phoneNumber, this.operatorEmail,
