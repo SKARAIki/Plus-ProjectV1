@@ -63,7 +63,8 @@ Github
 
 ## 5.ERD
 
-![Untitled (2).png](attachment:9584ffce-9772-4ac5-81c0-3e5ec3083014:Untitled_(2).png)
+<img width="878" height="1208" alt="Untitled (2) (1)" src="https://github.com/user-attachments/assets/9bdf4c68-33e1-4bdb-a2a6-3a1b2258271f" />
+
 
 ## 6.[API 명세](https://www.notion.so/API-2292dc3ef51480c99979dd9d1ca2bb15?pvs=21)
 
@@ -75,7 +76,8 @@ Github
 
 ### 문제 상황
 
-![26만개_6분5초.png](attachment:3a87d8e7-4d04-4eb5-9c12-b8df0ec4641f:26만개_6분5초.png)
+<img width="968" height="472" alt="26만개_6분5초" src="https://github.com/user-attachments/assets/97cac8b0-9f2e-4c9f-a3f9-b4a26c9d7466" />
+
 
 서울시에서 제공한 csv 파일을 기준으로 추가로 13만 개의 더미 데이터를 만들어 총 27만개의 row를 읽고 저장하는 테스트를 진행 하였을 때
 
@@ -156,7 +158,8 @@ public class MallCsvCustomRepositoryImpl implements MallCsvRepositoryCustom {
 
 ### 효과
 
-![jdbc_bulkInsert_1분.png](attachment:6248e80d-e2bf-4a64-86a3-30c35ad61c69:jdbc_bulkInsert_1분.png)
+<img width="786" height="426" alt="jdbc_bulkInsert_1분" src="https://github.com/user-attachments/assets/42235a63-e345-4a17-9e06-d3d4fc99fe1a" />
+
 
 같은 파일을 업로드 하였을 때 **6분 5초** 정도 걸리는 시간이 **약 1분** 정도로 **소요시간이 1/6로 줄어드는 효과**가 발생하였습니다. 
 
@@ -562,7 +565,8 @@ public class ShoppingMallCsvService {
 
 ### 효과
 
-![1231234.PNG](attachment:4a9e647a-f450-412a-9262-ada999465be7:1231234.png)
+<img width="1203" height="558" alt="1231234 PNG" src="https://github.com/user-attachments/assets/1923fc41-668d-44ab-8e2a-efba083f23ef" />
+
 
 멀티쓰레드 구현 전 코드와 후 코드는 크게 다른것은 없으며 병렬기준도 설정한 데이터 줄 수 기준으로
 
@@ -586,7 +590,8 @@ public class ShoppingMallCsvService {
 
 **‼️** POSTMAN에서 회원 가입 및 로그인은 정상 작동 하나, 로그인 후 토큰을 포함한 목록 조회 시 200 OK만 반환되고 응답 본문을 불러오지 못함
 
-![스크린샷 2025-07-11 오후 8.54.46.png](attachment:4ba19bb3-7fbc-43b7-972e-a99aa960cea3:스크린샷_2025-07-11_오후_8.54.46.png)
+
+<img width="1392" height="912" alt="스크린샷 2025-07-11 오후 8 54 46" src="https://github.com/user-attachments/assets/ce65b087-98e0-4ef4-ba7f-c3749abde536" />
 
 ✅ 원인 분석
 
@@ -636,3 +641,4 @@ LoginJwtFilter에서 JWT 토큰의 유효성 검증까지는 정상적으로 수
 - GitHub/GitLab에서 CODEOWNERS 지정 및 리뷰 승인 필수 설정을 적용하여 코드 리뷰 프로세스 강화
 
 문제 해결 후 응답B**ody** 정상 호출되는 모습
+<img width="857" height="314" alt="스크린샷 2025-07-14 오후 1 00 47" src="https://github.com/user-attachments/assets/a756ca1c-27ef-4158-8dac-49c5b52f8fe6" />
