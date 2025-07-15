@@ -471,7 +471,7 @@ By 이후부터 조건 필드를 나열해야 메소드가 제대로 작동한�
 
 filterByKeyword() 메서드 리펙토링함
 
-```json
+```java
 public List<MallOpenApiDto> filterByKeyword(List<MallOpenApiDto> mallOpenapiDto, String keyword) {
 
         // keyword가 없거나 빈 문자열일 경우("") 필터링 안하고 전체 반환
