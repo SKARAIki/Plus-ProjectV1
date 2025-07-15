@@ -171,142 +171,382 @@ public class MallCsvCustomRepositoryImpl implements MallCsvRepositoryCustom {
 
 문제1
 
-| 문제 상황 | QueryDSL 의존성을 추가하고 ``Q클래스를 사용하려 했지만 IDE에서 `QMall`클래스가 인식되지 않는 문제 발생
-빌드 디렉토리 내부에는 `QMall.class`가 생성되어 있었으나, IDE에서는 인식하지 못해 import조차 되지 않음 |
-| --- | --- |
-| 원인 분석 및 고민 | 처음에는 Gradle 의존성 설정에 문제가 있다고 의심했지만, 다음 경로에서 Q 클래스가 정상적으로 생성된 것을 확인
-`build/generated/sources/annotationProcessor/java/main`
-문제의 원인은 해당 경로가 IDE기준에서 자동으로 소스 디렉토리로 인식되지 않기 때문
-따라서 IDE가 Q 클래스를 소스 코드로 인식하도록 별도의 설정을 추가해야만 함 |
-| 해결 방법 | `build.gradle` 에 아래 설정을 추가하여 해결
-`def querydslDir = "$buildDir/generated/querydsl"
+문제1
+
+### 문제 상황
+
+QueryDSL 의존성을 추가하고 Q클래스를 사용하려 했지만, **IDE에서 QMall 클래스가 인식되지 않는 문제**가 발생했습니다.
+
+빌드 디렉토리 내에는 QMall 클래스가 생성되어 있었지만, **IDE에서는 이를 인식하지 못해 import조차 되지 않았습니다.**
+
+---
+
+### 고민 및 결정
+
+처음에는 의존성 설정이 잘못된 줄 알았지만,
+
+```
+build/generated/sources/annotationProcessor/java/main
+```
+
+경로에 Q 클래스들이 정상적으로 생성되어 있는 것을 확인했습니다.
+
+문제의 원인은 **생성된 경로가 IDE에서 소스 디렉토리로 자동 인식되지 않기 때문**이라는 점이었습니다.
+
+그래서 **IDE가 Q 클래스를 소스 코드로 인식하도록 별도의 설정을 추가하기로 결정**했습니다.
+
+---
+
+### 개선 내용
+
+`build.gradle`에 아래 설정을 추가했습니다:
+
+```java
+def querydslDir = "$buildDir/generated/querydsl"
 
 tasks.withType(JavaCompile).configureEach {
-options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
 }
 
 sourceSets {
-main.java.srcDirs += querydslDir
-}`
-**`annotationProcessorGeneratedSourcesDirectory`**
-→ Q 클래스들을 `build/generated/querydsl` 경로에 생성하도록 지정함 **`sourceSets.main.java.srcDirs += querydslDir`**
-→ 해당 디렉토리를 소스 디렉토리로 IDE에 등록하여 인식 가능하게 함 |
-| 개선 효과 | `build/generated/querydsl` 경로에 `QMall` 클래스가 정상 생성됨을 확인이후 IDE에서도 `QMall`을 인식하고 정상적으로 import 가능
-레포지토리 클래스 내에서 `import com.querydsl...QMall`이 자동 완성 및 컴파일 오류 없이 동작 |
+    main.java.srcDirs += querydslDir
+}
+```
+
+annotationProcessorGeneratedSourcesDirectory는  Q 클래스를 `build/generated/querydsl`에 생성하도록 지정하는 역할
+
+sourceSets.main.java.srcDirs += querydslDir는 해당 디렉토리를 소스 디렉토리로 등록하여 IDE가 인식하도록 하는 역할
+
+---
+
+### 효과
+
+- `build/generated/querydsl` 경로에 QMall 클래스가 정상 생성됨을 확인했습니다.
+- 이후 IDE에서도 QMall을 인식하고, 레포지토리 클래스에서 `import com.querydsl...QMall`이 정상적으로 동작했습니다.문제 상황
+
+QueryDSL 의존성을 추가하고 Q클래스를 사용하려 했지만, **IDE에서 QMall 클래스가 인식되지 않는 문제**가 발생했습니다.
+
+빌드 디렉토리 내에는 QMall 클래스가 생성되어 있었지만, **IDE에서는 이를 인식하지 못해 import조차 되지 않았습니다.**
+
+---
+
+### 고민 및 결정
+
+처음에는 의존성 설정이 잘못된 줄 알았지만,
+
+```
+build/generated/sources/annotationProcessor/java/main
+```
+
+경로에 Q 클래스들이 정상적으로 생성되어 있는 것을 확인했습니다.
+
+문제의 원인은 **생성된 경로가 IDE에서 소스 디렉토리로 자동 인식되지 않기 때문**이라는 점이었습니다.
+
+그래서 **IDE가 Q 클래스를 소스 코드로 인식하도록 별도의 설정을 추가하기로 결정**했습니다.
+
+---
+
+### 개선 내용
+
+`build.gradle`에 아래 설정을 추가했습니다:
+
+```java
+def querydslDir = "$buildDir/generated/querydsl"
+
+tasks.withType(JavaCompile).configureEach {
+    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
+sourceSets {
+    main.java.srcDirs += querydslDir
+}
+```
+
+annotationProcessorGeneratedSourcesDirectory는  Q 클래스를 `build/generated/querydsl`에 생성하도록 지정하는 역할
+
+sourceSets.main.java.srcDirs += querydslDir는 해당 디렉토리를 소스 디렉토리로 등록하여 IDE가 인식하도록 하는 역할
+
+---
+
+### 효과
+
+- `build/generated/querydsl` 경로에 QMall 클래스가 정상 생성됨을 확인했습니다.
+- 이후 IDE에서도 QMall을 인식하고, 레포지토리 클래스에서 `import com.querydsl...QMall`이 정상적으로 동작했습니다.
 
 안상아님
 
 문제1
 
-| 문제 상황 | `Authorization` 헤더에서 JWT 토큰을 추출할 때, 직접 `null` 체크 및 문자열 분리 로직을 작성
-`public String extractToken(String header) {
-if (header != null && header.startsWith(BEARER_PREFIX)) {
-return header.substring(BEARER_PREFIX.length());
+### **‼️**문제 상황
+
+- Authorization 헤더에서 JWT 토큰을 추출할 때,  직접 null 체크와 문자열 분리 로직을 처리
+
+```java
+public String extractToken(String header) {
+    if (header != null && header.startsWith(BEARER_PREFIX)) {
+        return header.substring(BEARER_PREFIX.length());
+    }
+    return null;
 }
-return null;
-}`
-정상 작동은 하지만, 토큰이 없거나 형식이 잘못된 경우 `null`을 반환하고
-후속 로직에서 이를 제대로 처리하지 않으면 `NullPointerException`이 발생할 수 있는 구조 |
-| --- | --- |
-| 원인 분석 및 고민 | `null`을 직접 반환하는 방식은 실수할 여지가 많고, 호출 측에서 반드시 `null` 체크가 필요함
-따라서 **Optional을 활용해 null 가능성을 명시하고, 더 안전한 방식으로 리팩토링**하기로 결정 |
-| 해결 방법 | `public Optional<String> extractToken(String header) {
-if (header != null && header.startsWith(BEARER_PREFIX)) {
-return Optional.of(header.substring(BEARER_PREFIX.length()));
-}
-return Optional.empty();
-}`
-`Optional` 을 반환함으로써 null을 직접 다루지 않아도 되고, 존재 여부를 명시적으로 확이할 수 있도록 개 |
-| 개선 효과 | `null` 가능성을 컴파일 타임에 명시해, 안정성을 향상
-호출 측에서 `Optional.ifPresent()`, `orElse()`, `orElseThrow()` 등을 통해 안전한 로직 처리 가능
-인증 필터 등 주요 흐름에서 조건 분기가 더 명확하고 일관성 있는 방식으로 구현 가능 |
+```
+
+---
+
+### ✅  고민 및 결정
+
+- 이 경우 ﻿정상 작동은 하지만, 토큰이 없거나 "Bearer " 접두사가 없는 경우 null을 리턴하게 되고, 이후 로직에서 이를 고려하지 않으면 **NullPointerException이 발생할 가능성**이 있음
+
+---
+
+### 개선 내용
+
+Optional<>을 반환하도록 리팩토링 하여, null 가능성을 명시하고 안정성을 향상 시킨다.
+
+```java
+public Optional<String> extracToken(String header) {
+        if (header != null && header.startsWith(BEARER_PREFIX)) {
+            return Optional.of(header.substring(BEARER_PREFIX.length()));
+        }
+        return Optional.empty();
+    }
+```
+
+---
+
+### ✅  효과
+
+- null 가능성 명시하여, 호출 측에서 값을 안전하게 처리하도록 유도할 수 있음
+- null을 직접 다루지 않아도 되므로, NullPointerException 방지할 수 있으며, 가독성과 안정성도 향상됨
+- 필터 등 인증처리 흐름에서도 조건 분기 처리를 명확하고 일관되게 구성 가능
+
+---
 
 문제2
 
-| 문제 상황 | JWT에서 사용자 정보를 추출하는 여러 메서드에서 토큰 파싱 로직이 반복되고 있음
-`public Long extractId(String token) {
-Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-return claims.get("id", Long.class);
-}`
-`extractId`, `extractEmail`, `extractMemberName` 등에서 동일한 파싱 로직이 중복
-파싱 방식이 변경되면 모든 메서드를 수정해야 하므로 유지보수가 어렵고 비효율적
-한 번만 파싱한 Claims 객체를 재사용하려 해도 멀티스레드 환경에서는 동시성 문제가 발생할 수 있음 |
-| --- | --- |
-| 원인 분석 및 고민 | 중복 제거를 위해 파싱 로직을 공통 메서드 `parseClaims(token)` 으로 분리
-매번 새로운 Claims 객체를 생성하도록 하여 요청 간 데이터 독립성 유지
-멀티스레드 환경에서 스레드 안전성을 확보 |
-| 해결 방법 | `private Claims parseClaims(String token) {
-return Jwts.parser()
-.setSigningKey(secretKey)
-.parseClaimsJws(token)
-.getBody();
-}
+### **‼️**문제 상황
 
-public Long extractId(String token) {
-return parseClaims(token).get("id", Long.class);
-}
+- JWT 토큰에서 사용자 정보를 추출하는 메서드(extractId, extractEmail, extractMemberName)마다 토큰 파싱 로직이 중복되어 있었음(파싱 방식 변경 시 모든 메서드를 수정해야 하는 등 유지보수가 어렵고 비효율적)
 
-public String extractEmail(String token) {
-return parseClaims(token).get("email", String.class);
-}
+```java
 
-public String extractMemberName(String token) {
-return parseClaims(token).get("memberName", String.class);
-}` |
-| 개선 효과 | 코드 중복 제거로 가독성 및 유지보수성 향상
-파싱 방식이 변경될 경우, 공통 메서드만 수정하면 되어서 단일 책임 원칙 준수
-매 요청마다 새로운 Claims 객체를 생성하므로, 스레드 간 데이터 충돌 방지인증 처리 로직의 일관성과 안정성 향상
-파싱 중복 제거는 구조적으로 서비스 확장 시 성능 최적화 기반이 될 수 있음(CPU 자원 효율성과 응답 시간 단축 가능성의 장점이 있음) |
+    /**
+     * 헤더에서 "Bearer <토큰>" 형식에서 토큰만 추출
+     */
+    public String extractToken(String header) {
+        if (header != null && header.startsWith(BEARER_PREFIX)) {
+            return header.substring(BEARER_PREFIX.length()); // "Bearer " 제거
+        }
+        return null;
+    }
+
+    /**
+     * 토큰에서 사용자 아이디(id)를 추출
+     */
+    public long extractId(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(key) //비밀키 설정
+                .build() //파서 빌더 빌드
+                .parseClaimsJws(token) //토큰 파싱 및 검증
+                .getBody(); //파싱 결과에서 실제 내용Body
+
+        return Long.parseLong(claims.getSubject());
+    }
+
+    /**
+     * 토큰에서 사용자 이름(MemberName)을 추출
+     */
+    public String extractMemberName(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject(); // setSubject로 저장했던 값 꺼냄
+    }
+
+    /**
+     * 토큰에서 이메일 추출
+     */
+    public String extractEmail(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getBody();
+
+        return claims.get("email", String.class);
+    }
+```
+
+---
+
+### ✅ 고민 및 결정
+
+- 파싱 로직이 여러 메서드에 흩어져 있어 일관성이 부족
+- key 설정이나 파서 구성 방식이 변경될 경우 **여러 메서드를 반복 수정해야 하는 비효율성** 존재
+- 또한 Claims를 재사용하려는 시도는 **멀티스레드 환경에서 공유 객체로 인한 동시성 문제** 발생 위험이 있음
+
+      →매번 새로운 Claims 객체를 안전하게 생성하되, **공통 파싱 메서드로 중복을 제거하는 방식**을 선택
+
+---
+
+### ✅ 개선 내용
+
+- 공통 파싱 메서드 parseClaims(token) 작성
+- 각 멤버 정보 추출 메서드는 parseClaims 호출 후 필요한 정보만 추출하도록 변경
+- 매번 새로운 Claims 객체 생성 → 요청 간 데이터 독립성 보장
+
+```java
+    /**
+     *token에서 멤버 정보 파싱
+     */
+    public Claims parseClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+    /**
+     * 파싱 객체에서 사용자 아이디(id)를 추출
+     */
+    public long extractId(String token) {
+         Claims claims = parseClaims(token);
+        return Long.parseLong(claims.getSubject());
+    }
+
+    /**
+     * 파싱 객체에서 사용자 이름(MemberName)을 추출
+     */
+    public String extractMemberName(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("memberName", String.class); //  저장했던 값 꺼냄
+    }
+
+    /**
+     * 파싱 객체에서 이메일 추출
+     */
+    public String extractEmail(String token) {
+        Claims claims = parseClaims(token);
+        return claims.get("email", String.class);
+    }
+```
+
+---
+
+### 효과
+
+- 코드 중복 제거로 가독성 및 유지보수성 향상
+- 변경 발생 시 단일 책임 메서드만 수정하면 되어 유지보수가 쉬움
+- 스레드 안전성 확보로 예기치 않은 에러 방지
+- 파싱 중복 제거는 구조적으로 서비스 확장 시 성능 최적화 기반이 될 수 있음(CPU 자원 효율성과 응답 시간 단축 가능성의 장점이 있음)
 
 이승은님
 문제1
 
-| 문제 상황 | Spring Data JPA를 사용하여 특정 필터 조건으로 업체 데이터를 조회하는 기능을 구현하던 중, 다음과 같은 쿼리 메서드를 작성
+### 문제 상황
+
+**Spring Data JPA를 활용하여 특정 필터 조건으로 업체 데이터를 조회하는 기능을 구현하던 중, 다음과 같이 쿼리 메소드를 작성했습니다.**
 `List<Mall> findTop10OverallRating(Integer overallRating, Pageable pageable);`
-이 메서드는 `overallRating` 기준으로 정렬된 상위 10개 업체를 조회하려는 의도였지만IntelliJ에서 메서드를 인식하지 못했고, 실행 시점에 예외가 발생 |
-| --- | --- |
-| 원인 분석 및 고민 | Spring Data JPA는 메서드 이름으로부터 쿼리를 자동 생성할 수 있도록 설계되어 있지만,정해진 메서드 명명 규칙을 반드시 따라야 정상 작동함
-위 메서드에서는 `By` 키워드가 빠져 있어 메서드 이름이 유효한 쿼리로 해석되지 않았음
-`findTop10`은 반환 개수를 제한하는 키워드이고,조건 필드는 반드시 `By` 뒤에 명시해야만 쿼리가 올바르게 생성
- 그래서 메서드 이름을 `findTop10ByOverallRating`으로 변경하기로 결정 |
-| 해결 방법 | 문제를 해결하기 위해 메서드명을 다음과 같이 수정
-`List<Mall> findTop10ByOverallRating(Integer overallRating);`
-`Top10` 키워드는 반환 개수 제한
-`ByOverallRating`은 조건 필드 지정
-`Pageable`이 불필요한 경우 제거 |
-| 개선 효과 | 수정 후 메서드가 정상적으로 인식되고 쿼리도 자동 생성됨
-상위 10개 업체를 `overallRating` 기준으로 정확하게 조회 가능
-쿼리 메서드 규칙을 다시 복습하는 계기가 되었으며, 작은 실수가 전체 기능에 영향을 줄 수 있다는 것을 실감
- |
+
+**해당 메소드는 overallRating 값으로 정렬된 상위 10개의 업체를 조회하려는 의도였지만, IntelliJ에서 해당 메소드를 인식하지 못하고 실행 시점에 예외가 발생했습니다.**
+
+---
+
+### 고민 및 결정
+
+Spring Data JPA는 메소드 이름으로부터 자동으로 쿼리를 생성하는데, 
+
+이때는 특정 규칙을 준수해야 합니다.
+
+알아본 결과 By 라는 키워드를 빠뜨려 메소드가 쿼리로 인식되지 않았습니다.
+
+올바른 메소드 명명법은 `findTop10ByOverallRating`이며,
+
+findTop10까지가 반환 개수 한정자이고 
+
+By 이후부터 조건 필드를 나열해야 메소드가 제대로 작동한다는걸 알게됐습니다.
+
+그래서 쿼리 메소드 이름을 바꿔야겠다고 결정했습니다.
+
+---
+
+### 개선 내용
+
+ Spring Data JPA 공식 문서 및 베이직 세션을 참고 하여,
+
+`findTop10OverallRating` 에서 `findTop10ByOverallRating` 로 변경했습니다.
+
+---
+
+### 효과
+
+수정 후 다시 실행해보니 정상적으로 작동하며, 쿼리도 올바르게 생성되었습니다.
+
+쿼리 메소드 규칙을 배웠지만 복습을 소홀히 하여 실수를 한 것 같아 반성하게 된 계기가 되었습니다.
+
+작은 실수가 쿼리 생성에 상당한 영향을 미칠 수 있다는 상황을 직접 경험함으로써 
+
+한층 더 신중한 개발을 할 수 있게 됐다고 생각합니다.
 
 이예진님
-문제1
+문제1: mainProducts의 슬래시(/) 구분 문제로 인한 필터링
 
-| 문제 상황 | OpenAPI에서 수집한 `mainProducts` 항목은 슬래시(`/`)로 구분된 문자열로 구성되어 있음
-예: `"mainProducts": "화장품/향수"`
-사용자 필터에서 `"화장품"`만 입력할 경우, 전체 문자열과 매칭되지 않아 필터링 실패 |
-| --- | --- |
-| 원인 분석 및 고민 | 슬래시(`/`)로 나눠진 각 품목을 개별적으로 비교할 수 있도록 분리해야 했고,
-일부 데이터는 단일 품목만 존재하므로 **예외 처리를 포함한 유연한 설계 필요** |
-| 해결 방법 | `filterByKeyword()` 메서드를 다음과 같이 리팩토링:
-`public List<MallOpenApiDto> filterByKeyword(List<MallOpenApiDto> mallOpenapiDto, String keyword) {
-if (keyword == null || keyword.isBlank()) return mallOpenapiDto;
+### 문제 상황
 
-return mallOpenapiDto.stream()
-.filter(dto -> {
-if (dto.getMainProducts() == null) return false;
+- OpenAPI에서 수집한 mainProducts 항목이 슬래시(/)로 구분되어 있었음
+    
+    예시)
+    
+    `"mainProducts": "화장품/향수"`
+    
+- 사용자가 예를 들어 화장품 이라는 키워드로 필터링 할 경우 전체 문자열과 일치하지 않아 오류발생
+    
+    ---
+    
 
-String[] parts = dto.getMainProducts().split("/");
+### 고민 및 결정
 
-return Arrays.stream(parts)
-.map(String::trim)
-.anyMatch(p -> p.contains(keyword.trim()));
-})
-.toList();
-}` |
-| 개선 효과 | `"화장품/향수"` → `["화장품", "향수"]` 로 분리하여 정확한 필터링 가능공백 제거 및 부분 일치 검사로 검색 유연성 향상
-단일/다중 품목 모두 대응 가능 |
+슬래시(/) 로 분리된 각 품목을 개별로 검사해야하며 일부 항목은 단일 품목만 있는 경우도 있어 예외처리 필요
 
+---
+
+### 개선 내용
+
+filterByKeyword() 메서드 리펙토링함
+
+```json
+public List<MallOpenApiDto> filterByKeyword(List<MallOpenApiDto> mallOpenapiDto, String keyword) {
+
+        // keyword가 없거나 빈 문자열일 경우("") 필터링 안하고 전체 반환
+        if (keyword == null || keyword.isBlank()) return mallOpenapiDto;
+
+        // 필터링된거 반환
+        return mallOpenapiDto.stream()
+                // 조건
+                .filter(dto -> {
+                    // mainProducts가 null이면 필터 대상에서 제외하고
+                    if (dto.getMainProducts() == null) return false;
+
+                    // 화장품/향수 같은 슬래쉬로 구분된 경우에 개별로 나눔
+                    String[] parts = dto.getMainProducts().split("/");
+
+                    // 각 품목을 trim 으로 공백제거
+                    return Arrays.stream(parts)
+                            .map(String::trim)
+                            .anyMatch(p -> p.contains(keyword.trim()));
+                })
+                .toList();
+    }
+```
+
+---
+
+### 효과
+
+- “화장품/향수” → “화장품”, “향수”로 분리하여 정확한 필터링 가능
+- 단일 항목 등 모든 경우 필터링 가능
 이형준님
 문제1
 
