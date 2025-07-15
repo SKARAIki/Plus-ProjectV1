@@ -56,19 +56,19 @@ Github
     - 정렬 기준:  monitoringDate 기준 최신순
     - 페이징 방식: QueryDSL 기반 커서 페이징(monitoringDate+id 복합 커서)
 
-### 아키텍쳐
+## 5.아키텍처
 
 <img width="2189" height="1210" alt="image" src="https://github.com/user-attachments/assets/dc1e0b25-01e4-4616-a7d4-a2a44b4a61f8" />
 
 
-## 5.ERD
+## 6.ERD
 
 <img width="878" height="1208" alt="Untitled (2) (1)" src="https://github.com/user-attachments/assets/9bdf4c68-33e1-4bdb-a2a6-3a1b2258271f" />
 
 
-## 6.[API 명세](https://www.notion.so/API-2292dc3ef51480c99979dd9d1ca2bb15?pvs=21)
+## 7.[API 명세](https://www.notion.so/API-2292dc3ef51480c99979dd9d1ca2bb15?pvs=21)
 
-## 7.트러블 슈팅
+## 8.트러블 슈팅
 
 ### 개인 트러블 슈팅
 
