@@ -58,8 +58,8 @@ Github
 
 ### 아키텍쳐
 
-![image.png](attachment:d7fe9064-fb4e-4e<img width="2189" height="1210" alt="image" src="https://github.com/user-attachments/assets/ea14a579-01cd-41e3-89d8-5242a6c64b17" />
-1f-88e7-eb286367c19a:image.png)
+<img width="2189" height="1210" alt="image" src="https://github.com/user-attachments/assets/dc1e0b25-01e4-4616-a7d4-a2a44b4a61f8" />
+
 
 ## 5.ERD
 
