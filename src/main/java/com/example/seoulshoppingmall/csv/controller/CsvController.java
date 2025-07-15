@@ -1,6 +1,7 @@
 package com.example.seoulshoppingmall.csv.controller;
 
 import com.example.seoulshoppingmall.common.dto.ApiResponse;
+import com.example.seoulshoppingmall.csv.dto.CsvFileResponse;
 import com.example.seoulshoppingmall.csv.serivce.CsvService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class CsvController {
     }
 
     @PostMapping("/collection")
-    public ApiResponse<String> CsvReadApi(@ModelAttribute MultipartFile csvFile) {
-        ApiResponse<String> fileUploadSuccess = csvService.csvFileUploadProcess(csvFile);
+    public ApiResponse<CsvFileResponse> CsvReadApi(@ModelAttribute MultipartFile csvFile) {
+        ApiResponse<CsvFileResponse> fileUploadSuccess = csvService.csvFileUploadProcess(csvFile);
         return fileUploadSuccess;
 
     }

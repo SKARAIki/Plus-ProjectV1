@@ -2,6 +2,7 @@ package com.example.seoulshoppingmall.csv.serivce;
 
 import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import com.example.seoulshoppingmall.csv.csvBean.CsvMallInfo;
+import com.example.seoulshoppingmall.csv.dto.CsvFileResponse;
 import com.example.seoulshoppingmall.domain.mall.entity.Mall;
 import com.example.seoulshoppingmall.domain.mall.repository.MallRepository;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -32,7 +33,7 @@ public class CsvService {
 
 
     @Transactional
-    public ApiResponse<String> csvFileUploadProcess(MultipartFile csvFile) {
+    public ApiResponse<CsvFileResponse> csvFileUploadProcess(MultipartFile csvFile) {
 
         try {
             InputStreamReader inputStreamReader
@@ -53,10 +54,14 @@ public class CsvService {
             mallRepository.bulkSave(mallInfoList);
             entityManager.flush();
             entityManager.clear();
+            int totalCount = csvMallInfoParse.size();
+            int successCount = mallInfoList.size();
+            int failCount = totalCount - successCount;
+            CsvFileResponse csvFileResponse = new CsvFileResponse(totalCount, mallInfoList.size(), failCount);
 
-            ApiResponse<String> success
-                    = ApiResponse.success(HttpStatus.CREATED, "CSV파일이 DB에 업로드 되었습니다", "");
-            return success;
+            ApiResponse<CsvFileResponse> csvFileSaveSuccess
+                    = ApiResponse.success(HttpStatus.CREATED, "CSV파일이 DB에 업로드 되었습니다", csvFileResponse);
+            return csvFileSaveSuccess;
 
         } catch (IOException e) {
             throw new RuntimeException("CSV파일 처리 에러");
