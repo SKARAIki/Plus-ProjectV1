@@ -220,56 +220,9 @@ sourceSets.main.java.srcDirs += querydslDir는 해당 디렉토리를 소스 디
 ### 효과
 
 - `build/generated/querydsl` 경로에 QMall 클래스가 정상 생성됨을 확인했습니다.
-- 이후 IDE에서도 QMall을 인식하고, 레포지토리 클래스에서 `import com.querydsl...QMall`이 정상적으로 동작했습니다.문제 상황
-
-QueryDSL 의존성을 추가하고 Q클래스를 사용하려 했지만, **IDE에서 QMall 클래스가 인식되지 않는 문제**가 발생했습니다.
-
-빌드 디렉토리 내에는 QMall 클래스가 생성되어 있었지만, **IDE에서는 이를 인식하지 못해 import조차 되지 않았습니다.**
-
----
-
-### 고민 및 결정
-
-처음에는 의존성 설정이 잘못된 줄 알았지만,
-
-```
-build/generated/sources/annotationProcessor/java/main
-```
-
-경로에 Q 클래스들이 정상적으로 생성되어 있는 것을 확인했습니다.
-
-문제의 원인은 **생성된 경로가 IDE에서 소스 디렉토리로 자동 인식되지 않기 때문**이라는 점이었습니다.
-
-그래서 **IDE가 Q 클래스를 소스 코드로 인식하도록 별도의 설정을 추가하기로 결정**했습니다.
-
----
-
-### 개선 내용
-
-`build.gradle`에 아래 설정을 추가했습니다:
-
-```java
-def querydslDir = "$buildDir/generated/querydsl"
-
-tasks.withType(JavaCompile).configureEach {
-    options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
-}
-
-sourceSets {
-    main.java.srcDirs += querydslDir
-}
-```
-
-annotationProcessorGeneratedSourcesDirectory는  Q 클래스를 `build/generated/querydsl`에 생성하도록 지정하는 역할
-
-sourceSets.main.java.srcDirs += querydslDir는 해당 디렉토리를 소스 디렉토리로 등록하여 IDE가 인식하도록 하는 역할
-
----
-
-### 효과
-
-- `build/generated/querydsl` 경로에 QMall 클래스가 정상 생성됨을 확인했습니다.
 - 이후 IDE에서도 QMall을 인식하고, 레포지토리 클래스에서 `import com.querydsl...QMall`이 정상적으로 동작했습니다.
+---
+
 
 안상아님
 
