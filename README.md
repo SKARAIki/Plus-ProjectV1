@@ -171,8 +171,6 @@ public class MallCsvCustomRepositoryImpl implements MallCsvRepositoryCustom {
 
 문제1
 
-문제1
-
 ### 문제 상황
 
 QueryDSL 의존성을 추가하고 Q클래스를 사용하려 했지만, **IDE에서 QMall 클래스가 인식되지 않는 문제**가 발생했습니다.
