@@ -1,11 +1,13 @@
 package com.example.seoulshoppingmall.common.config;
 
 import com.example.seoulshoppingmall.common.filter.LoginJwtFilter;
+import lombok.Getter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@Getter
 public class FilterConfig {
     //속상
     private final JwtTokenProvider jwtTokenProvider;

@@ -32,13 +32,6 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
+.env
 ### VS Code ###
 .vscode/
-### env ###
-.env
-### properties ###
-*.properties
-seoul_store.sql
-.DS_Store
-.DS_Store

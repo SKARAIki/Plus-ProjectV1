@@ -1,6 +1,7 @@
 package com.example.seoulshoppingmall.common.exception;
 
 import com.example.seoulshoppingmall.common.dto.ApiResponse;
+import com.example.seoulshoppingmall.domain.auth.Exception.*;
 import com.example.seoulshoppingmall.domain.mall.exception.NotFoundParamException;
 import com.example.seoulshoppingmall.domain.mall.exception.InvalidQueryParameterException;
 import org.springframework.http.HttpStatus;
@@ -8,10 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.example.seoulshoppingmall.common.dto.ErrorResponse;
 import com.example.seoulshoppingmall.domain.mall.exception.OpenApiException;
-import com.example.seoulshoppingmall.domain.auth.Exception.DuplicateEmailException;
-import com.example.seoulshoppingmall.domain.auth.Exception.EmailNotFoundException;
-import com.example.seoulshoppingmall.domain.auth.Exception.InvalidPasswordException;
-import com.example.seoulshoppingmall.domain.auth.Exception.InvalidPasswordFormatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -83,5 +80,15 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse(500, "서버 오류가 발생했습니다."));
+    }
+
+    //파일 없음 에러
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<ErrorResponse> fileExceptionHandle(FileException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }

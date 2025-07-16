@@ -2,12 +2,10 @@ package com.example.seoulshoppingmall.domain.mall.controller;
 
 import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import com.example.seoulshoppingmall.domain.mall.dto.response.MallGetListV1Response;
-import jakarta.validation.Valid;
 import com.example.seoulshoppingmall.domain.mall.dto.request.MallCursorRequestDto;
 import com.example.seoulshoppingmall.domain.mall.dto.response.MallCursorResponseDto;
 import com.example.seoulshoppingmall.domain.mall.service.MallService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.example.seoulshoppingmall.domain.mall.dto.response.MallGetListResponseDto;
@@ -34,8 +32,8 @@ public class MallController {
      */
     @GetMapping("/v1/malls")
     public ApiResponse<List<MallGetListV1Response>> getListMallsInfoApi(
-            @Valid @RequestParam(required = false) Integer overallRating,
-            @Valid @RequestParam(required = false) String businessStatus
+            @RequestParam(required = false) Integer overallRating,
+            @RequestParam(required = false) String businessStatus
     ) {
 
         List<MallGetListV1Response> listMallsInfoProcess

@@ -3,6 +3,7 @@ package com.example.seoulshoppingmall.domain.auth.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
+
 @Entity
 @Table(name = "members")
 public class Member {
@@ -22,6 +23,7 @@ public class Member {
 
     @Column(nullable = false, length = 50)
     private String memberName;
+
 
     /**
      * 생성자 - 약속된 형태로만 생성가능하도록 합니다.

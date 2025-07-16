@@ -1,7 +1,6 @@
 package com.example.seoulshoppingmall.common.filter;
 
 import com.example.seoulshoppingmall.common.config.JwtTokenProvider;
-import com.example.seoulshoppingmall.domain.auth.repository.MemberRepository;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

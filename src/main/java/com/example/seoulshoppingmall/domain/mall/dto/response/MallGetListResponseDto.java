@@ -1,10 +1,7 @@
 package com.example.seoulshoppingmall.domain.mall.dto.response;
 
-import com.example.seoulshoppingmall.common.dto.ApiResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-
 import java.util.List;
 
 //디티오는 게터 써도 괜찮아서 편의를 위해

@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
@@ -19,7 +18,7 @@ public class JwtTokenProvider {
     //속성
     private String secret;
     private final SecretKey key;
-    private Long expirationMillis;
+    //private Long expirationMillis;
 
 
     // JWT 앞에 붙는 접두사
@@ -27,11 +26,10 @@ public class JwtTokenProvider {
 
     //생성자
     public JwtTokenProvider(
-            @Value("${jwt.secret}") String secret,
-            @Value("${jwt.expiration}") Long expirationMillis) {
+            @Value("${jwt.secret}") String secret) {
         this.secret = secret;
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.expirationMillis = expirationMillis;
+        //this.expirationMillis = expirationMillis;
     }
     /**
      * 토큰 만들기
@@ -43,7 +41,8 @@ public class JwtTokenProvider {
         // 2. 데이터 준비
         String subject = member.getId().toString(); // 사용자 준비
         Date now = new Date();                // 현재시간
-        Date expiration = new Date(now.getTime() + expirationMillis); // 만료시간 환경변수로 관리
+        //Date expiration = new Date(now.getTime() + expirationMillis); // 만료시간 환경변수로 관리
+        long TOKEN_TIME = 60 * 60 * 1000L;
 
         // 2. 토큰 만들기
         String jwt = Jwts.builder()
@@ -51,7 +50,7 @@ public class JwtTokenProvider {
                 .issuedAt(now)
                 .claim("email", member.getEmail()) // 💡 커스텀 하게 활용하는 방법
                 .claim("memberName", member.getMemberName())
-                .expiration(expiration)
+                .expiration(new Date(now.getTime() + TOKEN_TIME))
                 .signWith(key)
                 .compact();
         return BEARER_PREFIX + jwt;
