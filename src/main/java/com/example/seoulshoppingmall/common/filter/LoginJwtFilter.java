@@ -60,6 +60,17 @@ public class LoginJwtFilter implements Filter {
             res.sendError(HttpServletResponse.SC_FORBIDDEN, "JWT 토큰이 유효하지 않습니다.");
             return;
         }
+
+//        // 멤버 정보 추출 및 저장
+//        String email = jwtTokenProvider.extractEmail(token);
+//        String memberName = jwtTokenProvider.extractMemberName(token);
+//        long memberId = jwtTokenProvider.extractId(token);
+//
+//        // 요청 객체에 저장
+//        req.setAttribute("email", email);
+//        req.setAttribute("memberName", memberName);
+//        req.setAttribute("memberId", memberId);
+
         chain.doFilter(request, response);
     }
 }
