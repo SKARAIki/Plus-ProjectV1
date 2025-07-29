@@ -33,7 +33,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    // @Valid 기능(유효성검사)
+
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     // JWT - jjwt
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
