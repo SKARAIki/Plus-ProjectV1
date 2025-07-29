@@ -25,6 +25,9 @@ jobs:
       - name: Build Spring Boot App
         run: ./gradlew clean build -x test
 
+      - name: List build/libs directory
+        run: ls -l build/libs/
+
       # ✅ 빌드된 JAR 업로드 (워크플로우 아티팩트로 저장)
       - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
@@ -51,7 +54,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "*.jar"
+          source: ./artifact/seoul-shoppingmall-latest.jar
           target: "/home/ubuntu/app/"
           overwrite: true
 
