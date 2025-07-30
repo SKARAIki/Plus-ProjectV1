@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app
-          path: build/libs/seoul-shoppingmall-latest.jar
+          path: build/libs/seoul-shoppingmall-[0-9.]*.jar
 
   deploy:
     needs: build
